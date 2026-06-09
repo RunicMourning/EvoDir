@@ -1,0 +1,202 @@
+/* ============================================================
+   CORPORATE — Clean Executive Theme
+   Charcoal, slate, crisp white text, steel blue accents
+   No grid, no glow — just clean professional typography
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-primary:  #1a1d23;
+  --bg-sidebar:  #13151a;
+  --bg-hover:    #22262e;
+  --border:      #2e3340;
+  --accent:      #4d7cfe;
+  --accent-dim:  #3a5fd4;
+  --text-primary:#e8eaf0;
+  --text-muted:  #7a8199;
+  --text-faint:  #4a5068;
+  --sidebar-w:   220px;
+  --grid-size:   40px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+body {
+  margin-left: var(--sidebar-w);
+  padding: 2rem 2rem 6rem 2rem;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-brand::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: var(--accent);
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.sidebar-brand .label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.sidebar-brand .name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.sidebar-brand .clock {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+.sidebar-divider {
+  margin: 0 1rem;
+  border: none;
+  border-top: 1px solid var(--border);
+  display: block;
+}
+
+.sidebar-section {
+  padding: 1rem 1rem 0.5rem;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  letter-spacing: 0.01em;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+}
+
+.nav-link i { font-size: 16px; color: var(--text-faint); }
+
+.nav-link:hover {
+  background: var(--bg-hover);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.nav-link:hover i { color: var(--accent); }
+
+h1 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-transform: uppercase;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border-bottom: 1px solid var(--border);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(46,51,64,0.6);
+  color: var(--text-primary);
+}
+
+tr:hover td { background: var(--bg-hover); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: #7a9ffe; text-decoration: underline; }
+
+pre { font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+
+hr { display: none; }
+img[src*="icons"] { display: none; }
+
+address {
+  margin-top: 1.5rem;
+  font-size: 12px;
+  color: var(--text-faint);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Footer & stat variables */
+:root {
+  --footer-bg:     rgba(19, 21, 26, 0.98);
+  --footer-border: #2e3340;
+  --font-mono:     'JetBrains Mono', monospace;
+  --stat-label:    #4a5068;
+  --stat-value:    #e8eaf0;
+  --stat-accent:   #4d7cfe;
+  --bar-bg:        #13151a;
+  --bar-border:    #2e3340;
+  --text-faint:    #2e3340;
+}

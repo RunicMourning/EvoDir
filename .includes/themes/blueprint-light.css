@@ -1,0 +1,201 @@
+/* ============================================================
+   BLUEPRINT LIGHT — Inverted Blueprint Theme
+   White/pale blue background, navy text, blueprint accents
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --bg:            #f0f5ff;
+  --bg-body:       #e8f0fe;
+  --bg-sidebar:    #dce8fb;
+  --blue-line:     #a8c4e8;
+  --blue-accent:   #1a6fd4;
+  --blue-glow:     #0d4fa8;
+  --text-primary:  #0d2045;
+  --text-muted:    #4a6a9a;
+  --text-faint:    #8aaad0;
+  --sidebar-w:     220px;
+  --grid-size:     40px;
+  --footer-bg:     rgba(220, 232, 251, 0.98);
+  --footer-border: #a8c4e8;
+  --stat-label:    #4a6a9a;
+  --stat-value:    #0d2045;
+  --stat-accent:   #1a6fd4;
+  --bar-bg:        #dce8fb;
+  --bar-border:    #a8c4e8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+body {
+  background-image:
+    linear-gradient(rgba(26,111,212,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,111,212,0.08) 1px, transparent 1px),
+    linear-gradient(rgba(26,111,212,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,111,212,0.04) 1px, transparent 1px);
+  background-size:
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    8px 8px, 8px 8px;
+  margin-left: var(--sidebar-w);
+  padding: 2rem 2rem 6rem 2rem;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--blue-line);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--blue-line);
+}
+
+.sidebar-brand::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: var(--blue-accent);
+  margin-bottom: 8px;
+}
+
+.sidebar-brand .label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.sidebar-brand .name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue-glow);
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+}
+
+.sidebar-brand .clock {
+  font-size: 11px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text-muted);
+  margin-top: 6px;
+  letter-spacing: 0.1em;
+}
+
+.sidebar-divider {
+  margin: 0 1rem;
+  border: none;
+  border-top: 1px solid var(--blue-line);
+  display: block;
+}
+
+.sidebar-section {
+  padding: 1rem 1rem 0.5rem;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-family: 'Share Tech Mono', monospace;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 1px solid transparent;
+  letter-spacing: 0.03em;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+}
+
+.nav-link i { font-size: 17px; color: var(--blue-accent); }
+
+.nav-link:hover {
+  background: rgba(26,111,212,0.1);
+  border-color: var(--blue-line);
+  color: var(--blue-glow);
+}
+
+.nav-link:hover i { color: var(--blue-glow); }
+
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--blue-glow);
+  letter-spacing: 0.05em;
+  font-family: 'Share Tech Mono', monospace;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--blue-line);
+  text-transform: uppercase;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--blue-line);
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 400;
+}
+
+td {
+  padding: 7px 12px;
+  border-bottom: 1px solid rgba(168,196,232,0.6);
+  color: var(--text-primary);
+}
+
+tr:hover td { background: rgba(26,111,212,0.06); }
+
+a { color: var(--blue-accent); text-decoration: none; }
+a:hover { color: var(--blue-glow); text-decoration: underline; }
+
+pre { font-family: 'Share Tech Mono', monospace; color: var(--text-primary); }
+
+hr { display: none; }
+img[src*="icons"] { display: none; }
+
+address {
+  margin-top: 1.5rem;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+}

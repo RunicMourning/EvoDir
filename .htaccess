@@ -1,0 +1,29 @@
+Options +Indexes
+
+HeaderName /.includes/header.html
+ReadmeName /.includes/footer.html
+IndexOptions FancyIndexing SuppressRules SuppressHTMLPreamble
+IndexIgnore .htaccess .includes
+
+AddDescription "PHP Script" *.php
+AddDescription "HTML Document" *.html *.htm
+AddDescription "JavaScript File" *.js
+AddDescription "Stylesheet" *.css
+AddDescription "ZIP Archive" *.zip
+AddDescription "TAR Archive" *.tar *.tar.gz *.tgz
+AddDescription "Image File" *.png *.jpg *.jpeg *.gif *.webp
+AddDescription "PDF Document" *.pdf
+AddDescription "Text File" *.txt *.md
+AddDescription "JSON Data" *.json
+AddDescription "XML Data" *.xml
+AddDescription "SQLite Database" *.db *.sqlite *.sqlite3
+AddDescription "Audio File" *.mp3 *.wav *.flac *.ogg *.aac *.m4a
+AddDescription "Video File" *.mp4 *.mkv *.avi *.mov *.wmv *.flv *.webm
+
+# Custom error pages
+ErrorDocument 400 /.includes/400.php
+ErrorDocument 403 /.includes/403.php
+ErrorDocument 404 /.includes/404.php
+ErrorDocument 500 /.includes/500.php
+ErrorDocument 502 /.includes/502.php
+ErrorDocument 503 /.includes/503.php

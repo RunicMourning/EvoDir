@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homelab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="/.includes/themes/blueprint.css">
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="label">Homelab</div>
+    <div class="name" id="sidebar-hostname">LOADING</div>
+    <div class="clock" id="sidebar-clock">--:--:--</div>
+  </div>
+  <div id="sidebar-nav">
+    <!-- Populated by JavaScript from nav.json -->
+  </div>
+</div>
+
+<script>
+// Load navigation from nav.php
+fetch('/.includes/nav.php')
+  .then(r => r.json())
+  .then(sections => {
+    var html = '';
+    Object.entries(sections).forEach(([sectionName, links]) => {
+      html += '<div class="sidebar-section">';
+      html += '<div class="sidebar-section-label">' + sectionName + '</div>';
+      links.forEach(link => {
+        var target = link.url.startsWith('http') ? ' target="_blank"' : '';
+        html += '<a class="nav-link" href="' + link.url + '"' + target + '>';
+        html += '<i class="bi ' + link.icon + '"></i> ' + link.label;
+        html += '</a>';
+      });
+      html += '</div>';
+      html += '<hr class="sidebar-divider">';
+    });
+    document.getElementById('sidebar-nav').innerHTML = html;
+  })
+  .catch(err => {
+    document.getElementById('sidebar-nav').innerHTML = '<div style="padding: 1rem; color: #6a90c0; font-size: 12px;">Nav unavailable</div>';
+  });
+
+// Load hostname from stats.php
+fetch('/.includes/stats.php')
+  .then(r => r.json())
+  .then(d => {
+    if (d.hostname) {
+      document.getElementById('sidebar-hostname').textContent = d.hostname.toUpperCase();
+    }
+  })
+  .catch(() => {
+    // Keep default if fetch fails
+  });
+
+// Live clock
+(function() {
+  function tick() {
+    var el = document.getElementById('sidebar-clock');
+    if (!el) return;
+    var now = new Date();
+    var h = String(now.getHours()).padStart(2, '0');
+    var m = String(now.getMinutes()).padStart(2, '0');
+    var s = String(now.getSeconds()).padStart(2, '0');
+    el.textContent = h + ':' + m + ':' + s;
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// Inject "Index of" heading if Apache didn't generate one
+document.addEventListener('DOMContentLoaded', function() {
+  if (!document.querySelector('h1')) {
+    var h1 = document.createElement('h1');
+    h1.textContent = 'Index of ' + decodeURIComponent(window.location.pathname);
+    var body = document.body;
+    // Insert before the first non-sidebar element
+    var sidebar = document.querySelector('.sidebar');
+    var ref = sidebar ? sidebar.nextSibling : body.firstChild;
+    body.insertBefore(h1, ref);
+  }
+});
+</script>

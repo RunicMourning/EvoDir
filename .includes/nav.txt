@@ -1,0 +1,9 @@
+[NAVIGATION]
+bi-server|CasaOS|http://192.168.40.56:8080/
+bi-film|Plex|http://192.168.40.56:32400/web/
+bi-book-half|AudioBookshelf|http://192.168.40.56:8081/
+bi-database|PHPMyAdmin|/phpmyadmin/
+
+[FILES]
+bi-hdd-network|Root|/
+

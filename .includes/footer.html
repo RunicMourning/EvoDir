@@ -1,0 +1,250 @@
+<footer style="
+  position: fixed;
+  bottom: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  background: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  padding: 1rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+">
+  <div id="stats-grid" style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+    <div style="color: var(--text-faint);">Loading system stats...</div>
+  </div>
+  <div style="color: var(--text-faint); font-size: 11px; white-space: nowrap; margin-left: 1rem;">
+    <span id="footer-hostname">SYSTEM</span> &mdash; Apache &mdash; <span id="stats-time"></span>
+  </div>
+</footer>
+
+<script>
+// ---------------------------------------------------------------------------
+// DIRECTORY LISTING REWRITE
+// ---------------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', function() {
+
+  var pre = document.querySelector('pre');
+  if (!pre) return;
+
+  if (!document.querySelector('h1')) {
+    var h1 = document.createElement('h1');
+    h1.textContent = 'Index of ' + decodeURIComponent(window.location.pathname);
+    pre.parentNode.insertBefore(h1, pre);
+  }
+
+  var lines = pre.innerHTML.split('\n');
+  var entries = [];
+
+  lines.forEach(function(line) {
+    if (!line.trim() || line.indexOf('?C=') !== -1) return;
+
+    var hrefMatch = line.match(/href="([^"]+)"/);
+    var labelMatch = line.match(/>([^<]+)<\/a>/);
+    if (!hrefMatch || !labelMatch) return;
+
+    var href  = hrefMatch[1];
+    var label = labelMatch[1].trim();
+
+    if (href.startsWith('?')) return;
+
+    var plain = line.replace(/<[^>]+>/g, '').trim();
+    var parts = plain.split(/\s{2,}/);
+
+    var date = '';
+    var size = '';
+    var desc = '';
+
+    for (var i = 0; i < parts.length; i++) {
+      if (/^\d{4}-\d{2}-\d{2}/.test(parts[i].trim())) {
+        date = parts[i].trim();
+        size = (parts[i + 1] || '').trim();
+        desc = (parts[i + 2] || '').trim();
+        break;
+      }
+    }
+
+    var isDir    = href.endsWith('/');
+    var isParent = (label === 'Parent Directory' || href === '../');
+
+    entries.push({
+      href: href, label: label, date: date,
+      size: isDir ? '&mdash;' : (size || '&mdash;'),
+      desc: desc, isDir: isDir, isParent: isParent,
+    });
+  });
+
+  var table = document.createElement('table');
+  table.innerHTML =
+    '<thead><tr>' +
+      '<th style="width:40%">Name</th>' +
+      '<th style="width:18%">Last Modified</th>' +
+      '<th style="width:8%; text-align:right;">Size</th>' +
+      '<th>Description</th>' +
+    '</tr></thead>' +
+    '<tbody id="dir-tbody"></tbody>';
+
+  function iconFor(entry) {
+    if (entry.isParent) return 'bi-arrow-up-circle';
+    if (entry.isDir)    return 'bi-folder2';
+    var ext = entry.label.split('.').pop().toLowerCase();
+    var map = {
+      html: 'bi-filetype-html', htm: 'bi-filetype-html',
+      php: 'bi-filetype-php', inc: 'bi-filetype-php',
+      js: 'bi-filetype-js', mjs: 'bi-filetype-js',
+      ts: 'bi-filetype-ts', tsx: 'bi-filetype-tsx',
+      css: 'bi-filetype-css', jsx: 'bi-filetype-jsx',
+      json: 'bi-filetype-json', jsonc: 'bi-filetype-json',
+      xml: 'bi-file-code', xsl: 'bi-file-code', xslt: 'bi-file-code',
+      yaml: 'bi-file-code', yml: 'bi-file-code',
+      toml: 'bi-file-code', ini: 'bi-file-code', cfg: 'bi-file-code', conf: 'bi-file-code',
+      env: 'bi-file-code',
+      txt: 'bi-file-text', md: 'bi-file-text', markdown: 'bi-file-text',
+      pdf: 'bi-file-pdf', csv: 'bi-file-spreadsheet', log: 'bi-file-text',
+      db: 'bi-database', sqlite: 'bi-database', sqlite3: 'bi-database', sql: 'bi-database',
+      zip: 'bi-file-zip', tar: 'bi-file-zip', gz: 'bi-file-zip', gzip: 'bi-file-zip',
+      tgz: 'bi-file-zip', '7z': 'bi-file-zip', rar: 'bi-file-zip',
+      png: 'bi-file-image', jpg: 'bi-file-image', jpeg: 'bi-file-image',
+      gif: 'bi-file-image', webp: 'bi-file-image', bmp: 'bi-file-image',
+      tiff: 'bi-file-image', tif: 'bi-file-image', ico: 'bi-file-image',
+      svg: 'bi-filetype-svg',
+      mp4: 'bi-file-play', mkv: 'bi-file-play', avi: 'bi-file-play',
+      mov: 'bi-file-play', wmv: 'bi-file-play', flv: 'bi-file-play', webm: 'bi-file-play',
+      mp3: 'bi-file-music', wav: 'bi-file-music', flac: 'bi-file-music',
+      ogg: 'bi-file-music', aac: 'bi-file-music', m4a: 'bi-file-music',
+      sh: 'bi-terminal', bash: 'bi-terminal', zsh: 'bi-terminal',
+      py: 'bi-filetype-py', rb: 'bi-file-code',
+      pl: 'bi-file-code', pm: 'bi-file-code',
+      bat: 'bi-terminal', cmd: 'bi-terminal',
+    };
+    return map[ext] || 'bi-file-earmark';
+  }
+
+  var tbody = table.querySelector('#dir-tbody');
+
+  entries.forEach(function(e) {
+    var tr = document.createElement('tr');
+    tr.dataset.name = decodeURIComponent(e.href);
+    tr.innerHTML =
+      '<td><a href="' + e.href + '">' +
+        '<i class="bi ' + iconFor(e) + '" style="margin-right:8px; font-size:15px;"></i>' +
+        e.label +
+      '</a></td>' +
+      '<td style="color:var(--text-muted);font-family:var(--font-mono);font-size:13px;">' +
+        (e.date || '&mdash;') +
+      '</td>' +
+      '<td style="text-align:right;color:var(--text-muted);font-family:var(--font-mono);font-size:13px;">' +
+        e.size +
+      '</td>' +
+      '<td class="entry-desc" style="color:var(--text-muted);font-size:14px;">' +
+        (e.desc || '') +
+      '</td>';
+    tbody.appendChild(tr);
+  });
+
+  pre.parentNode.replaceChild(table, pre);
+
+  fetch('/.includes/descriptions.php?path=' + encodeURIComponent(window.location.pathname))
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      Object.keys(data).forEach(function(name) {
+        var row = table.querySelector('tr[data-name="' + name + '"]');
+        if (!row) return;
+        var cell = row.querySelector('.entry-desc');
+        if (cell && !cell.textContent.trim()) cell.textContent = data[name];
+      });
+    })
+    .catch(function() {});
+});
+
+// ---------------------------------------------------------------------------
+// SYSTEM STATS FOOTER
+// ---------------------------------------------------------------------------
+
+// Read a CSS variable from :root at runtime so statBlock is theme-aware
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function barColor(pct) {
+  if (pct >= 90) return '#ff4a4a';
+  if (pct >= 75) return '#ffaa2a';
+  return cssVar('--stat-accent') || '#4a9eff';
+}
+
+function statBlock(label, icon, valueHtml, barPct) {
+  var barBg     = cssVar('--bar-bg')     || '#0d2045';
+  var barBorder = cssVar('--bar-border') || '#1a3a6e';
+  var bar = barPct !== null
+    ? '<div style="background:' + barBg + ';border:1px solid ' + barBorder + ';border-radius:2px;height:4px;width:140px;margin-top:4px;">' +
+        '<div style="width:' + barPct + '%;height:100%;background:' + barColor(barPct) + ';border-radius:2px;"></div>' +
+      '</div>'
+    : '';
+  var labelColor = cssVar('--stat-label') || '#4a7aaa';
+  var valueColor = cssVar('--stat-value') || '#c8deff';
+  return '<div style="min-width:140px;display:flex;flex-direction:column;justify-content:center;">' +
+    '<div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2px;color:' + labelColor + ';">' +
+      '<i class="bi ' + icon + '" style="font-size:12px;"></i> ' + label +
+    '</div>' +
+    '<div style="color:' + valueColor + ';">' + valueHtml + '</div>' +
+    bar +
+  '</div>';
+}
+
+var NA = '<span style="color:' + (cssVar('--text-faint') || '#3a5a80') + ';">unavailable</span>';
+
+fetch('/.includes/stats.php')
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var html        = '';
+    var accent      = cssVar('--stat-accent') || '#4a9eff';
+    var accentMuted = cssVar('--text-muted')  || '#6a90c0';
+
+    if (d.hostname) {
+      document.getElementById('footer-hostname').textContent = d.hostname.toUpperCase();
+    }
+
+    var memVal = (d.ram_used !== null && d.ram_total !== null)
+      ? d.ram_used + ' / ' + d.ram_total + ' <span style="color:' + accent + ';">(' + d.ram_pct + '%)</span>'
+      : NA;
+    html += statBlock('Memory', 'bi-memory', memVal, d.ram_pct !== null ? d.ram_pct : null);
+
+    var swapVal = (d.swap_used !== null && d.swap_total !== null)
+      ? d.swap_used + ' / ' + d.swap_total + ' <span style="color:' + accent + ';">(' + d.swap_pct + '%)</span>'
+      : NA;
+    html += statBlock('Swap', 'bi-hdd-rack', swapVal, d.swap_pct !== null ? d.swap_pct : null);
+
+    var loadVal = (d.cpu_load !== null)
+      ? d.cpu_load + ' / ' + d.cpu_load_5 + ' / ' + d.cpu_load_15 + ' <span style="color:' + accentMuted + ';">avg</span>'
+      : NA;
+    html += statBlock('Load 1m/5m/15m', 'bi-cpu', loadVal, null);
+
+    html += statBlock('Processes', 'bi-diagram-3', d.processes !== null ? String(d.processes) : NA, null);
+    html += statBlock('Uptime',    'bi-clock',     d.uptime    !== null ? d.uptime             : NA, null);
+
+    if (d.docker && d.docker.plex_status) {
+      var pc      = d.docker.plex_status === 'running' ? accent : '#ff4a4a';
+      var plexMem = d.docker.plex_memory || 'N/A';
+      html += statBlock('Plex', 'bi-play-circle', plexMem + ' <span style="color:' + pc + ';">(' + d.docker.plex_status + ')</span>', null);
+    }
+
+    if (d.disks) {
+      d.disks.forEach(function(disk) {
+        var diskVal = disk.error
+          ? NA
+          : disk.used + ' / ' + disk.total + ' <span style="color:' + accent + ';">(' + disk.pct + '%)</span>';
+        html += statBlock('/mnt/' + disk.name, 'bi-hdd', diskVal, disk.error ? null : disk.pct);
+      });
+    }
+
+    document.getElementById('stats-grid').innerHTML = html;
+    document.getElementById('stats-time').textContent = d.time + ' UTC';
+  })
+  .catch(function() {
+    document.getElementById('stats-grid').innerHTML = '<div style="color:' + (cssVar('--text-faint') || '#3a5a80') + ';">Stats unavailable</div>';
+  });
+</script>
