@@ -4,7 +4,15 @@ A modern, themeable Apache directory listing interface. EvoDir replaces Apache's
 
 No framework. No build step. Drop it in and it works.
 
-![Blueprint Theme](/.includes/themes/blueprint.css)
+---
+
+## Screenshots
+
+### Blueprint Theme (Default)
+![Blueprint Theme](screenshots/blueprint.png)
+
+### Terminal Theme
+![Terminal Theme](screenshots/terminal.png)
 
 ---
 
@@ -52,8 +60,8 @@ To switch themes, change the `<link>` tag in `header.html` to point to the desir
 4. Visit your server in a browser
 
 ```bash
-git clone https://github.com/RunicMourning/evodir.git
-cp -r evodir/. /var/www/html/
+git clone https://github.com/RunicMourning/EvoDir.git
+cp -r EvoDir/. /var/www/html/
 ```
 
 That's it. EvoDir uses `$_SERVER['DOCUMENT_ROOT']` so no path configuration is needed.
@@ -70,6 +78,7 @@ That's it. EvoDir uses `$_SERVER['DOCUMENT_ROOT']` so no path configuration is n
 │   ├── footer.html            # Injected after directory listing (stats + JS rewrite)
 │   ├── stats.php              # System stats JSON endpoint
 │   ├── descriptions.php       # Directory description JSON endpoint
+│   ├── nav.txt                # Navigation links config
 │   └── themes/
 │       ├── blueprint.css
 │       ├── blueprint-light.css
@@ -94,6 +103,23 @@ your-project/
 ```
 
 The description appears automatically in the parent directory listing. No configuration required.
+
+---
+
+## Navigation
+
+Navigation links are configured in `/.includes/nav.txt` using a simple pipe-delimited format:
+
+```
+[NAVIGATION]
+bi-server|CasaOS|http://192.168.1.1:8080/
+bi-film|Plex|http://192.168.1.1:32400/web/
+bi-book-half|AudioBookshelf|http://192.168.1.1:8081/
+[FILES]
+bi-hdd-network|Root|/
+```
+
+Format: `icon|label|url` — icons are [Bootstrap Icons](https://icons.getbootstrap.com/) class names.
 
 ---
 
@@ -157,8 +183,17 @@ Version 2 is planned with the following changes:
 - Service health indicators
 - Theme switcher UI
 - Directory size calculation
+- Relative timestamps ("2 days ago")
 
 See `ROADMAP_V2.md` for full details.
+
+---
+
+## Contributing
+
+Contributions and suggestions are welcome. Open an issue or pull request on GitHub.
+
+[https://github.com/RunicMourning/EvoDir](https://github.com/RunicMourning/EvoDir)
 
 ---
 
@@ -167,9 +202,3 @@ See `ROADMAP_V2.md` for full details.
 © 2026 The Vintage Gamers. All rights reserved.
 
 Project by Scott — [thevintagegamers.com](https://thevintagegamers.com)
-
----
-
-## Contributing
-
-This is a personal project but contributions and suggestions are welcome. Open an issue or pull request on GitHub.
