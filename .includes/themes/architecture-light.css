@@ -1,0 +1,91 @@
+/* ============================================================
+   BLUEPRINT LIGHT — Technical Spec Sheet (variables only)
+   Theme ID: architecture-light
+   Family: Architecture
+   ============================================================ */
+:root {
+  --theme-id:           "architecture-light";
+  --theme-family:       "Architecture";
+  --theme-display-name: "Specsheet";
+
+  /* ------------------------------------------------------------
+     SURFACE & LAYOUT — Technical Vellum / Off-White
+     ------------------------------------------------------------ */
+  --bg-base:            #f4f6f8;
+  --bg-surface:         #e9eef4;
+  --shell-sidebar-bg:   #e9eef4;
+  --shell-sidebar-text: #1a2536;
+  --shell-header-bg:    #e9eef4;
+  --shell-header-text:  #1a2536;
+  --shell-footer-bg:    rgba(233, 238, 244, 0.98);
+  --shell-footer-text:  #4a6282;
+  --shell-main-bg:      #f4f6f8;
+  --shell-main-text:    #1a2536;
+
+  /* ------------------------------------------------------------
+     LINE WORK, INK & TYPOGRAPHY
+     ------------------------------------------------------------ */
+  --border-color:       #b0c4de;
+  --accent-primary:     #1e3a8a; /* Drafting Ink Blue */
+  --text-primary:       #0d172a;
+  --text-muted:         #475569;
+
+  --overlay-hover:      rgba(30, 58, 138, 0.08);
+  --overlay-active:     rgba(30, 58, 138, 0.12);
+  --overlay-faint:      rgba(30, 58, 138, 0.03);
+
+  /* Non-Repro Blue Grid Pattern */
+  --grid-line-major:    rgba(30, 58, 138, 0.08);
+  --grid-line-minor:    rgba(30, 58, 138, 0.03);
+  --grid-size:          40px;
+
+  --font-body:          'Rajdhani', sans-serif;
+  --font-mono:          'Share Tech Mono', monospace;
+
+  --btn-radius:         2px;
+  --card-radius:        2px;
+  --actionbar-radius:   2px;
+  --alert-radius:       2px;
+
+  /* ------------------------------------------------------------
+     ACTIONBAR & ALERT INTENT PALETTE
+     Technical document markups (Redline, Revisions, Stamps)
+     ------------------------------------------------------------ */
+  --actionbar-bg:       #ffffff;
+  --alert-border-color: #b0c4de;
+
+  --intent-notice:      #1e3a8a; /* Blueprint Blue Note */
+  --intent-notice-bg:   #eff6ff;
+  
+  --intent-good:        #166534; /* Approved Stamp Green */
+  --intent-good-bg:     #f0fdf4;
+  
+  --intent-warn:        #b45309; /* Revision / Field Attention Orange */
+  --intent-warn-bg:     #fffbeb;
+  
+  --intent-bad:         #991b1b; /* Redline / Callout Red */
+  --intent-bad-bg:      #fef2f2;
+
+  /* ------------------------------------------------------------
+     TECHNICAL SPEC SHEET KPI PALETTE
+     Subtle muted vellum/paper fills with high-contrast drafting ink.
+     ------------------------------------------------------------ */
+  --kpi-1-bg: #e2e8f0; --kpi-1-text: #0f172a; /* General Specs (Slate) */
+  --kpi-2-bg: #e0f2fe; --kpi-2-text: #0369a1; /* Active Draft (Cyan Ink) */
+  --kpi-3-bg: #f1f5f9; --kpi-3-text: #334155; /* Metadata (Drafting Gray) */
+  --kpi-4-bg: #fef3c7; --kpi-4-text: #92400e; /* Revision Tag (Manila) */
+  --kpi-5-bg: #dcfce7; --kpi-5-text: #166534; /* Approved (Stamp Green) */
+  --kpi-6-bg: #fee2e2; --kpi-6-text: #991b1b; /* Redline / Callout (Stamp Red) */
+
+  /* KPI Border Mix Logic */
+  --kpi-border-blend: #475569;
+  --kpi-border-mix:   75%;
+}
+
+/* ------------------------------------------------------------
+   UI ELEMENT OVERRIDES
+   ------------------------------------------------------------ */
+.evodir-version-tag {
+  background-color: #1e3a8a;
+  color: #ffffff;
+}

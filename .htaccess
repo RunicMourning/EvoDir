@@ -1,29 +1,134 @@
+php_value date.timezone "America/Chicago"
+
+# ------------------------------------------------------------
+# DIRECTORY LISTING BEHAVIOR (Apache AutoIndex)
+# ------------------------------------------------------------
+
 Options +Indexes
+# Enables Apache directory browsing.
+# This is what allows folders to display as a navigable listing.
 
 HeaderName /.includes/header.html
+# Injects a custom HTML header above every directory listing.
+# Used for branding, navigation, and UI shell overlay.
+
 ReadmeName /.includes/footer.html
+# Injects a custom HTML footer below every directory listing.
+# Typically used for closing markup, legal links, or site footer content.
+
 IndexOptions FancyIndexing SuppressRules SuppressHTMLPreamble
-IndexIgnore .htaccess .includes
+# Controls appearance and behavior of directory listings:
+# - FancyIndexing: enables styled, structured listing layout
+# - SuppressRules: removes default horizontal rules (<hr>)
+# - SuppressHTMLPreamble: allows full custom HTML control via header/footer files
+
+IndexIgnore .htaccess .includes .legal
+# Prevents these files/folders from appearing in directory listings:
+# - .htaccess (security and config file)
+# - .includes (internal system templates/API/UI components)
+# - .legal (legal documents not intended for raw browsing visibility)
+
+
+# ------------------------------------------------------------
+# FILE TYPE LABELING (UI Metadata Enhancements)
+# ------------------------------------------------------------
 
 AddDescription "PHP Script" *.php
-AddDescription "HTML Document" *.html *.htm
-AddDescription "JavaScript File" *.js
-AddDescription "Stylesheet" *.css
-AddDescription "ZIP Archive" *.zip
-AddDescription "TAR Archive" *.tar *.tar.gz *.tgz
-AddDescription "Image File" *.png *.jpg *.jpeg *.gif *.webp
-AddDescription "PDF Document" *.pdf
-AddDescription "Text File" *.txt *.md
-AddDescription "JSON Data" *.json
-AddDescription "XML Data" *.xml
-AddDescription "SQLite Database" *.db *.sqlite *.sqlite3
-AddDescription "Audio File" *.mp3 *.wav *.flac *.ogg *.aac *.m4a
-AddDescription "Video File" *.mp4 *.mkv *.avi *.mov *.wmv *.flv *.webm
+# Labels PHP files in directory listings as server-side scripts.
 
-# Custom error pages
+AddDescription "HTML Document" *.html *.htm
+# Identifies static HTML files.
+
+AddDescription "JavaScript File" *.js
+# Labels frontend logic scripts.
+
+AddDescription "Stylesheet" *.css
+# Identifies CSS styling files.
+
+AddDescription "ZIP Archive" *.zip
+# Archive file type label.
+
+AddDescription "TAR Archive" *.tar *.tar.gz *.tgz
+# Linux-style compressed archives.
+
+AddDescription "Image File" *.png *.jpg *.jpeg *.gif *.webp
+# Common image formats used in UI/media assets.
+
+AddDescription "PDF Document" *.pdf
+# Portable document format files.
+
+AddDescription "Text File" *.txt *.md
+# Plain text and Markdown documentation files.
+
+AddDescription "JSON Data" *.json
+# Structured data format often used for APIs/config.
+
+AddDescription "XML Data" *.xml
+# Legacy/structured markup format.
+
+AddDescription "SQLite Database" *.db *.sqlite *.sqlite3
+# Local database files (used for lightweight storage systems).
+
+AddDescription "Audio File" *.mp3 *.wav *.flac *.ogg *.aac *.m4a
+# Audio media formats (music, podcasts, etc).
+
+AddDescription "Video File" *.mp4 *.mkv *.avi *.mov *.wmv *.flv *.webm
+# Video media formats (streaming, archival, encoding formats).
+
+
+# ------------------------------------------------------------
+# CUSTOM ERROR HANDLING (Themed Error Pages)
+# ------------------------------------------------------------
+
 ErrorDocument 400 /.includes/400.php
+# Bad request error page (malformed or invalid requests)
+
 ErrorDocument 403 /.includes/403.php
+# Forbidden access page (permission denied)
+
 ErrorDocument 404 /.includes/404.php
+# Not found page (missing files/routes)
+
 ErrorDocument 500 /.includes/500.php
+# Internal server error page (PHP/Apache failures)
+
 ErrorDocument 502 /.includes/502.php
+# Bad gateway (upstream service failure, proxy-related)
+
 ErrorDocument 503 /.includes/503.php
+# Service unavailable (maintenance or overload state)
+
+
+# ------------------------------------------------------------
+# URL REWRITING / ROUTING LAYER
+# ------------------------------------------------------------
+
+RewriteEngine On
+# Enables Apache mod_rewrite engine for URL transformation rules.
+
+RewriteBase /
+# Defines root-relative base path for rewrite processing.
+# Ensures consistent routing behavior regardless of directory depth.
+
+RewriteRule ^legal/([^/]+)/?$ /.legal/$1.php [L]
+# Clean URL routing for legal pages:
+# - /legal/terms   ? /.legal/terms.php
+# - /legal/privacy ? /.legal/privacy.php
+#
+# [L] = stop processing further rules once matched
+# This creates a lightweight routing layer over filesystem structure
+
+
+
+
+
+# Disable caching for theme CSS files only — everything else on the
+# site keeps normal caching behavior. Remove this once you're done
+# actively iterating on themes; permanently uncached CSS means every
+# page load re-fetches every theme file for every visitor.
+
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</IfModule>

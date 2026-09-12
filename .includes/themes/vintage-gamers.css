@@ -1,0 +1,226 @@
+/* ============================================================
+   VINTAGE GAMERS - Matching thevintagegamers.com
+   #000099 blue sidebar, #990000 red footer, white text/links
+   Press Start 2P - brand + h1
+   VT323 - sidebar nav + stats
+   Pixelify Sans - body + table
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Pixelify+Sans:wght@400;500;600&display=swap');
+
+/* Theme metadata — read by the theme-selector module. */
+:root {
+  --theme-id:           "vintage-gamers";
+  --theme-family:       "";
+  --theme-display-name: "The Vintage Gamers";
+
+  --bg-base:              #f0f0f0;
+  --bg-surface:           #ffffff;
+  --shell-sidebar-bg:     #000099;
+  --shell-sidebar-text:   #ffffff;
+  --shell-header-bg:      #000099;
+  --shell-header-text:    #ffffff;
+  --shell-footer-bg:      rgba(153, 0, 0, 0.98);
+  --shell-footer-text:    #ffffff;
+  --shell-main-bg:        #f0f0f0;
+  --shell-main-text:      #111111;
+
+  --border-color:         #990000;
+  --accent-primary:       #000099;
+  --text-primary:         #111111;
+  --text-muted:           #666666;
+
+  --overlay-hover:        rgba(255, 255, 255, 0.15);
+  --overlay-active:       rgba(0, 0, 153, 0.06);
+
+  --font-body: 'Pixelify Sans', 'Courier New', monospace;
+  --font-mono: 'VT323', 'Courier New', monospace;
+
+  --btn-radius: 0px;
+  --card-radius: 0px;
+  --actionbar-radius: 0px;
+  --alert-radius: 0px;
+
+  /* Position-mapped from kpi/module.js's fixed render order:
+     1=Folders 2=Files 3=Movies 4=TV Shows 5=Songs */
+  --kpi-1-bg: #000099; --kpi-1-text: #ffffff;
+  --kpi-2-bg: #0033cc; --kpi-2-text: #ffffff;
+  --kpi-3-bg: #990000; --kpi-3-text: #ffffff;
+  --kpi-4-bg: #cc3300; --kpi-4-text: #ffffff;
+  --kpi-5-bg: #006600; --kpi-5-text: #ffffff;
+  --kpi-6-bg: #000099; --kpi-6-text: #ffffff;
+  --kpi-border-blend: white;
+  --kpi-border-mix: 90%;
+
+  --intent-notice:    #000099;
+  --intent-notice-bg: rgba(153, 0, 0, 0.07);
+}
+
+/* Base link focus states for accessibility */
+a:focus-visible, 
+button:focus-visible {
+  outline: 2px solid var(--border-color);
+  outline-offset: 2px;
+}
+
+/* Sidebar background image, plus locally re-scoped text/accent tokens —
+   --text-primary/--text-muted/--accent-primary above are tuned for the
+   light main content area; .stat-value, .weather-*, etc. read those
+   directly (not through inheritance), so without this override they'd
+   render dark-on-dark, and --accent-primary (#000099) is literally the
+   same blue as this sidebar's background. */
+.app-sidebar {
+  background: url('vintage-gamers-sidebar.png') center top / cover no-repeat;
+  --text-primary: #ffffff;
+  --text-muted: #99ccff;
+  --accent-primary: #ffcc00;
+  --overlay-hover: rgba(255, 255, 255, 0.15);
+  --overlay-active: rgba(255, 255, 255, 0.25);
+}
+
+/* Press Start 2P - h1 only */
+h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.8;
+  color: #990000;
+}
+
+/* VT323 for sidebar nav links & hover glow */
+.app-sidebar a {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.05em;
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+.app-sidebar a:hover {
+  color: var(--accent-primary) !important;
+  text-shadow: 0 0 4px rgba(255, 204, 0, 0.4);
+}
+
+/* VT323 for sidebar section headings */
+.app-sidebar h2 {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  letter-spacing: 0.15em;
+}
+
+/* VT323 for sidebar stats */
+.stat-row,
+.stat-label,
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 17px;
+}
+
+/* Pixelify Sans for the directory table */
+.modern-file-table {
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+
+.modern-file-table .col-name a { 
+  color: #000099; 
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.modern-file-table .col-name a:hover { 
+  color: #990000; 
+  text-decoration: underline;
+}
+
+.modern-file-table td:not(.col-name) {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* KPI Card sharp edges & hover interaction */
+[class^="kpi-card"] {
+  transition: transform 0.1s ease-in-out;
+}
+
+[class^="kpi-card"]:hover {
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.app-footer {
+  font-family: var(--font-mono);
+  font-size: 16px;
+}
+.app-footer a { color: #ffffff; }
+.footer-info-text { color: #ffcccc; }
+
+/* ---- Banner - skewed left accent ---- */
+#evodir-banner {
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  position: relative;
+  padding-left: 24px;
+  overflow: hidden;
+}
+#evodir-banner::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 8px;
+  height: 120%;
+  background: #990000;
+  transform: skewY(-4deg);
+  transform-origin: top left;
+}
+#evodir-banner strong {
+  color: #990000;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  line-height: 1.8;
+}
+#evodir-banner a { color: #000099; }
+#evodir-banner a:hover { color: #990000; }
+
+/* ---- Legal Page Styling ---- */
+.legal-list dt {
+  font-family: var(--font-mono);
+  color: #990000;
+}
+.legal-list dd a:link { color: #000099; }
+.legal-list dd a:visited { color: #990000; }
+.legal-list dd a:hover { color: #990000; }
+.dt-red  { color: #990000; }
+.dt-blue { color: #000099; }
+
+/* Version tag */
+.evodir-version-tag {
+  background-color: #990000;
+  color: #ffffff;
+}
+
+/* Replace sidebar name text with TVG logo cleanly */
+.app-navbar-brand {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 220px;
+  height: 40px;
+}
+
+.app-navbar-brand::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-image: url('https://www.thevintagegamers.com/wp-content/themes/TVG2025/images/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.app-navbar-subtitle {
+  display: none !important;
+}

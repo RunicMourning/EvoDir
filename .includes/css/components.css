@@ -1,0 +1,228 @@
+/* ==========================================================================
+   Chameleon CSS — Components
+   Generic, area-agnostic pieces: cards, buttons, input groups, text
+   utilities, breadcrumb, branding. If deleting an area file would make a
+   rule meaningless, it isn't a component — it belongs in that area's
+   file instead of here.
+   ========================================================================== */
+
+/* ==========================================================================
+   Branding
+   General-purpose "swap text for a logo image" treatment — currently only
+   used on the header wordmark, but not tied to the header; a theme could
+   apply it anywhere it wants text replaced by an image. font-size: 0 hides
+   the text visually while keeping it in the accessibility tree. The image
+   itself is --brand-logo-* in style.css, so a theme only needs to override
+   those three tokens, never this rule.
+   ========================================================================== */
+.branding {
+  display: inline-block;
+  font-size: 0;
+  color: transparent;
+  width: var(--brand-logo-width);
+  height: var(--brand-logo-height);
+  background-image: var(--brand-logo-url);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   Card Structure
+   ========================================================================== */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.card > :last-child {
+  margin-bottom: 0;
+}
+
+.card > h3:first-child,
+.card > h2:first-child {
+  margin-top: 0;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+/* ==========================================================================
+   Status Text Utilities
+   For when a specific value needs to carry semantic meaning (good/warn/bad)
+   independent of whatever ambient color its card happens to have — e.g. a
+   status word inside a .kpi-body, or a table cell. Direct rules on the
+   element itself naturally win over an inherited .kpi color, so no
+   !important is needed.
+   ========================================================================== */
+.text-notice { color: var(--intent-notice); }
+.text-good   { color: var(--intent-good); }
+.text-warn   { color: var(--intent-warn); }
+.text-bad    { color: var(--intent-bad); }
+.text-muted  { color: var(--text-muted); }
+
+/* ==========================================================================
+   Button Component (Native tags + .btn class)
+   ========================================================================== */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid var(--btn-border);
+  border-radius: var(--btn-radius);
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover {
+  background-color: var(--btn-bg-hover);
+  text-decoration: none;
+}
+
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible,
+input[type="reset"]:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   Input Groups (Prepend, Append, and Nested Search Bars)
+   ========================================================================== */
+
+/* The base container wrapper */
+.input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background-color: var(--input-group-bg);
+  border: 1px solid var(--input-group-border);
+  border-radius: var(--input-group-radius);
+  overflow: hidden; /* Keeps inner items constrained to the radius */
+  transition: border-color 150ms ease, outline 150ms ease;
+}
+
+/* When the wrapper is focused, highlight the whole unit */
+.input-group:focus-within {
+  border-color: var(--accent-primary);
+  outline: 1px solid var(--accent-primary);
+}
+
+/* Style raw inputs and buttons inside the group to strip individual borders */
+.input-group input,
+.input-group textarea,
+.input-group select,
+.input-group button,
+.input-group .btn {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* Let the text input expand to fill available space */
+.input-group input,
+.input-group textarea {
+  flex: 1 1 auto;
+  padding: var(--space-2) var(--space-3);
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+/* textarea-only: input-group was originally single-line-only (a search
+   bar), so height/resize need their own rule rather than piggybacking
+   on the input rule above. Vertical-only resize keeps the group's own
+   border from being fought by a user dragging it wider. */
+.input-group textarea {
+  min-height: 6rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Prepend or Append text/descriptors (Bootstrap style) */
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-3);
+  background-color: var(--overlay-faint);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* Borders separating internal elements of the group */
+.input-group > .input-group-text:not(:first-child),
+.input-group > button:not(:first-child),
+.input-group > .btn:not(:first-child) {
+  border-left: 1px solid var(--input-group-border);
+}
+
+.input-group > .input-group-text:not(:last-child),
+.input-group > button:not(:last-child),
+.input-group > .btn:not(:last-child) {
+  border-right: 1px solid var(--input-group-border);
+}
+
+/* Hover state for buttons nested inside an input group */
+.input-group button:hover,
+.input-group .btn:hover {
+  background-color: var(--overlay-hover);
+}
+
+.breadcrumb {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: var(--space-4, 1rem);
+  padding-bottom: var(--space-3, 0.75rem);
+
+}
+
+.breadcrumb a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.themename:before {
+content: var(--theme-display-name);
+}
+
+.version-tag {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+  border-radius: var(--btn-radius);
+  background-color: var(--overlay-active);
+  color: var(--text-muted);
+}

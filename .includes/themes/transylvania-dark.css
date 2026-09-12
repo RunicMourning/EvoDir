@@ -1,0 +1,96 @@
+/* ============================================================
+   DRACULA — Abyssal Horror Variant (Dark Emotional System)
+   ============================================================ */
+:root {
+  --theme-id:           "transylvania-dark";
+  --theme-family:       "Transylvania";
+  --theme-display-name: "Dracula";
+
+  --bg-base:            #000000;
+  --bg-surface:         #0b0b0b;
+  --shell-sidebar-bg:   #020002;
+  --shell-sidebar-text: #ffffff;
+  --shell-header-bg:    #020002;
+  --shell-header-text:  #ffffff;
+  --shell-footer-bg:    rgba(0, 0, 0, 0.98);
+  --shell-footer-text:  #c7c7c7;
+  --shell-main-bg:      #000000;
+  --shell-main-text:    #ffffff;
+
+  --border-color:       #2a2a2a;
+  --accent-primary:     #b1005a;
+  --text-primary:       #ffffff;
+  --text-muted:         #c7c7c7;
+
+  --overlay-hover:      rgba(177, 0, 90, 0.12);
+  --overlay-active:     rgba(161, 0, 255, 0.1);
+  --overlay-faint:      rgba(161, 0, 255, 0.06);
+
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --btn-radius: 3px;
+  --card-radius: 3px;
+  --actionbar-radius: 3px;
+  --alert-radius: 3px;
+
+  /* Dracula-only atmospheric overlay, used below on .app-sidebar */
+  --aura-purple: rgba(120, 0, 90, 0.10);
+  --aura-red:    rgba(80, 0, 0, 0.08);
+
+  /* Theme color tokens mapped strictly to the Dracula palette.
+     Position-mapped from kpi/module.js's fixed render order:
+     1=Folders 2=Files 3=Movies 4=TV Shows 5=Songs */
+  --kpi-1-bg: #3c143c; --kpi-1-text: #f5e6f5; /* Deep Violet Aura */
+  --kpi-2-bg: #b1005a; --kpi-2-text: #ffffff; /* Maroon Pulse / Crimson Accent */
+  --kpi-3-bg: #660033; --kpi-3-text: #ffffff; /* Dark Bleeding Crimson */
+  --kpi-4-bg: #78005a; --kpi-4-text: #ffffff; /* Atmospheric Orchid Purple */
+  --kpi-5-bg: #a100ff; --kpi-5-text: #ffffff; /* Electric Neon Violet Glow */
+  --kpi-6-bg: #3c143c; --kpi-6-text: #f5e6f5;
+  --kpi-border-blend: white;
+  --kpi-border-mix: 88%;
+}
+
+.evodir-version-tag {
+  background-color: #b1005a;
+  color: #000000;
+}
+
+/* ============================================================
+   DRACULA SIDEBAR — Bat swarm + atmospheric aura
+   ============================================================ */
+.app-sidebar {
+  background-color: var(--shell-sidebar-bg);
+
+  --bat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23161616' d='M457.242 71.075c-23.626 83.731-98.746 64.409-100.894 122.373-1.804 48.383-72.988 103.035-72.988 103.035l-2.148-25.759s21.469-34.353 2.148-34.353-27.36 25.767-27.36 25.767-8.039-25.767-27.36-25.767 2.148 34.353 2.148 34.353l-2.148 25.759s-71.184-54.652-72.996-103.035c-2.14-57.964-77.276-38.642-100.886-122.373C42.75 28.489-18.221 182.713 5.381 206.323c53.674 25.758 55.814 55.814 47.228 72.988-8.578 17.172 21.478 15.015 45.088 17.172 23.61 2.157 32.197 38.642 32.197 47.221 0 8.594 10.726-6.446 34.353-8.578 23.594-2.148 24.014 70.41 32.188 62.253 23.61-23.619 36.747 21.824 45.089 34.344 4.288 6.438 14.476 21.47 14.476 15.024 0 6.446 10.188-8.586 14.476-15.024 8.342-12.521 21.462-57.963 45.088-34.344 8.174 8.156 8.578-64.402 32.197-62.253 23.618 2.132 34.344 17.172 34.344 8.578 0-8.578 8.586-45.064 32.197-47.221 23.61-2.157 53.666 0 45.08-17.172-8.595-17.173-6.438-47.229 47.237-72.988C530.221 182.713 469.249 28.489 457.242 71.075z'/%3E%3C/svg%3E");
+
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(120, 0, 90, 0.18), transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(60, 0, 10, 0.14), transparent 65%),
+    var(--bat), var(--bat), var(--bat), var(--bat),
+    var(--bat), var(--bat), var(--bat), var(--bat);
+
+  background-repeat: no-repeat;
+
+  background-position:
+    center,
+    50% 2%,
+    18% 14%,
+    70% 21%,
+    36% 34%,
+    60% 45%,
+    32% 57%,
+    50% 68%,
+    50% 88%;
+
+  background-size:
+    auto,
+    170px,
+    120px,
+    110px,
+    85px,
+    75px,
+    60px,
+    48px,
+    32px;
+}

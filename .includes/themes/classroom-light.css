@@ -1,0 +1,74 @@
+/* ============================================================
+   PAPER — Light mode variant of Classroom (variables only)
+   ============================================================ */
+:root {
+  --theme-id:           "classroom-light";
+  --theme-family:       "Classroom";
+  --theme-display-name: "Term Paper";
+
+  --bg-base:            #ffffff;
+  --bg-surface:         #f5f5f5;
+  --shell-sidebar-bg:   #f5f5f5;
+  --shell-sidebar-text: #1a1a1a;
+  --shell-header-bg:    #f5f5f5;
+  --shell-header-text:  #1a1a1a;
+  --shell-footer-bg:    rgba(245, 245, 245, 0.98);
+  --shell-footer-text:  #666666;
+  --shell-main-bg:      #ffffff;
+  --shell-main-text:    #1a1a1a;
+
+  --border-color:       #d0d0d0;
+  --accent-primary:     #1a1a1a;
+  --text-primary:       #1a1a1a;
+  --text-muted:         #666666;
+
+  --overlay-hover:      rgba(0, 0, 0, 0.05);
+  --overlay-active:     rgba(0, 0, 0, 0.03);
+  --overlay-faint:      rgba(0, 0, 0, 0.02);
+
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --btn-radius: 3px;
+  --card-radius: 3px;
+  --actionbar-radius: 3px;
+  --alert-radius: 3px;
+
+  --kpi-1-bg: #333333; --kpi-1-text: #ffffff;
+  --kpi-2-bg: #555555; --kpi-2-text: #ffffff;
+  --kpi-3-bg: #111111; --kpi-3-text: #ffffff;
+  --kpi-4-bg: #777777; --kpi-4-text: #ffffff;
+  --kpi-5-bg: #444444; --kpi-5-text: #ffffff;
+  --kpi-6-bg: #333333; --kpi-6-text: #ffffff;
+  --kpi-border-blend: black;
+  --kpi-border-mix: 85%;
+}
+
+.evodir-version-tag {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+/* ============================================================
+   PAPER SIDEBAR — Balanced Notebook Lines
+   ============================================================ */
+.app-sidebar {
+  position: relative;
+  background-color: var(--shell-sidebar-bg);
+
+  /* Shifted from 0.04 -> 0.08 alpha: visible, but still sits nicely in the background */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 100% 28px;
+}
+
+/* Red Margin Line — Shifted from 0.18 -> 0.30 alpha */
+.app-sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30px;
+  width: 1px;
+  height: 100%;
+  background-color: rgba(217, 83, 79, 0.30);
+  pointer-events: none;
+}

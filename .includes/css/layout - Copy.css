@@ -1,0 +1,225 @@
+/* ==========================================================================
+   Structural CSS Framework
+   Scope: Grid, Breakpoints, Containers, Utilities, Layout Skeletons
+   ========================================================================== */
+
+/* ===== BREAKPOINTS (source of truth — update here AND everywhere they're used) =====
+   tablet:    768px
+   desktop:   1024px
+   ultrawide: 2560px
+   ================================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Grid System */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > [class*="col"] {
+  padding-left: calc(var(--gutter) / 2);
+  padding-right: calc(var(--gutter) / 2);
+  box-sizing: border-box;
+}
+
+.col-1  { flex: 0 0 8.3333%;  max-width: 8.3333%; }
+.col-2  { flex: 0 0 16.6667%; max-width: 16.6667%; }
+.col-3  { flex: 0 0 25%;      max-width: 25%; }
+.col-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+.col-5  { flex: 0 0 41.6667%; max-width: 41.6667%; }
+.col-6  { flex: 0 0 50%;      max-width: 50%; }
+.col-7  { flex: 0 0 58.3333%; max-width: 58.3333%; }
+.col-8  { flex: 0 0 66.6667%; max-width: 66.6667%; }
+.col-9  { flex: 0 0 75%;      max-width: 75%; }
+.col-10 { flex: 0 0 83.3333%; max-width: 83.3333%; }
+.col-11 { flex: 0 0 91.6667%; max-width: 91.6667%; }
+.col-12 { flex: 0 0 100%;     max-width: 100%; }
+.col    { flex: 1 1 0%;       max-width: 100%; }
+
+@media (max-width: 767px) {
+  .row > [class*="col"] {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  .row > [class*="col"]:not(:last-child) {
+    margin-bottom: var(--gutter);
+  }
+}
+
+/* Container System */
+.container, [class^="container-"] {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  box-sizing: border-box;
+}
+
+.container-640  { max-width: 640px; }
+.container-960  { max-width: 960px; }
+.container-1200 { max-width: 1200px; }
+.container-1440 { max-width: 1440px; }
+.container-2560 { max-width: 2560px; }
+
+/* Visibility Utilities */
+@media (max-width: 767px)  { .hide-under-tablet { display: none !important; } }
+@media (min-width: 768px)  { .hide-over-tablet { display: none !important; } }
+@media (max-width: 1023px) { .hide-under-desktop { display: none !important; } }
+@media (min-width: 1024px) { .hide-over-desktop { display: none !important; } }
+@media (max-width: 2559px) { .hide-under-ultrawide { display: none !important; } }
+@media (min-width: 2560px) { .hide-over-ultrawide { display: none !important; } }
+
+/* ==========================================================================
+   App-Shell Skeleton
+   ========================================================================== */
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: var(--header-height) 1fr auto;
+  grid-template-areas: "header header" "sidebar main" "footer footer";
+  min-height: 100vh;
+  transition: grid-template-columns var(--transition-speed);
+}
+
+.app-shell.sidebar-collapsed {
+  grid-template-columns: var(--sidebar-width-collapsed) 1fr;
+}
+
+/* The sidebar's own padding/border can't shrink below its own size inside
+   a 0px grid track (unshrinkable box-model minimum), which otherwise leaves
+   a visible sliver instead of a clean collapse. Zero them explicitly. */
+.app-shell.sidebar-collapsed .app-sidebar {
+  padding: 0;
+  border-right: none;
+}
+
+/* For pages using .app-navbar instead of .app-sidebar for primary nav (5.3)
+   — no sidebar column reserved at all, rather than an empty one. */
+.app-shell.no-sidebar {
+  grid-template-columns: 1fr;
+  grid-template-areas: "header" "main" "footer";
+}
+
+.app-header  {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+}
+.app-sidebar {
+  grid-area: sidebar;
+  overflow: hidden;
+  transition: padding var(--transition-speed), border-color var(--transition-speed);
+  width: var(--sidebar-width);
+  box-sizing: border-box;
+}
+.app-main {
+  grid-area: main;
+  min-width: 0; /* grid items default to min-width:auto, which can let
+                   long unbreakable content force the column wider than
+                   intended — same class of fix as the collapsed-sidebar
+                   padding issue from earlier */
+  box-sizing: border-box;
+}
+.app-footer { grid-area: footer; }
+
+/* Decorative "graph paper" grid — invisible by default (grid-line-*
+   tokens are transparent in the fallback); a theme opts in just by
+   setting them to real colors. Minor grid is 1/5 of the major grid's
+   spacing (40px major / 8px minor at the default --grid-size: 40px). */
+.app-main {
+  background-image:
+    linear-gradient(var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-line-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-minor) 1px, transparent 1px);
+  background-size:
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    calc(var(--grid-size) / 5) calc(var(--grid-size) / 5),
+    calc(var(--grid-size) / 5) calc(var(--grid-size) / 5);
+}
+
+.app-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--space-3);
+}
+
+/* Mobile off-canvas: applies identically to .app-sidebar and .app-navbar-menu,
+   whichever primary-nav panel a given page uses. */
+@media (max-width: 767px) {
+  .app-sidebar,
+  .app-navbar-menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    height: calc(100vh - var(--header-height));
+    width: var(--sidebar-width);
+    transform: translateX(-100%);
+    transition: transform var(--transition-speed);
+    z-index: var(--z-overlay);
+  }
+  .app-sidebar.is-open,
+  .app-navbar-menu.is-open { transform: translateX(0); }
+
+  .nav-toggle     { display: inline-flex; }
+  .sidebar-toggle { display: none; }
+
+  .app-shell { grid-template-columns: 1fr; grid-template-areas: "header" "main" "footer"; }
+}
+
+@media (min-width: 768px) {
+  .nav-toggle     { display: none; }
+  .sidebar-toggle { display: inline-flex; }
+}
+
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-backdrop);
+  display: none;
+  background-color: var(--nav-backdrop-bg);
+}
+.nav-backdrop.is-open { display: block; }
+
+/* Respect reduced-motion: disable the shell collapse + off-canvas slide */
+@media (prefers-reduced-motion: reduce) {
+  .app-shell,
+  .app-sidebar,
+  .app-navbar-menu {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Actionbar Skeleton
+   ========================================================================== */
+.actionbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  width: 100%;
+  margin-bottom: var(--space-4);
+}
+.kpi {
+  flex: 1 1 180px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.actionbar > [class^="alert-"], .actionbar > .notice {
+  flex: 1 1 240px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}

@@ -1,0 +1,104 @@
+/* ============================================================
+   BLUEPRINT — Default Theme (variables only)
+   Theme ID: architecture-dark
+   Family: Architecture
+   ============================================================ */
+:root {
+  --theme-id:           "architecture-dark";
+  --theme-family:       "Architecture";
+  --theme-display-name: "Blueprint";
+
+  /* ------------------------------------------------------------
+     SURFACE & LAYOUT — Cyanotype Blueprint Navy
+     ------------------------------------------------------------ */
+  --bg-base:            #0a1628;
+  --bg-surface:         rgba(10, 22, 40, 0.97);
+  --shell-sidebar-bg:   rgba(10, 22, 40, 0.97);
+  --shell-sidebar-text: #c8deff;
+  --shell-header-bg:    rgba(10, 22, 40, 0.97);
+  --shell-header-text:  #c8deff;
+  --shell-footer-bg:    rgba(10, 22, 40, 0.98);
+  --shell-footer-text:  #6a90c0;
+  --shell-main-bg:      #0a1628;
+  --shell-main-text:    #c8deff;
+
+  /* ------------------------------------------------------------
+     LINE WORK, INK & TYPOGRAPHY
+     ------------------------------------------------------------ */
+  --border-color:       #1a3a6e;
+  --accent-primary:     #4a9eff;
+  --text-primary:       #c8deff;
+  --text-muted:         #6a90c0;
+
+  --overlay-hover:      rgba(74, 158, 255, 0.1);
+  --overlay-active:     rgba(74, 158, 255, 0.06);
+  --overlay-faint:      rgba(74, 158, 255, 0.04);
+
+  --grid-line-major:    rgba(74, 158, 255, 0.07);
+  --grid-line-minor:    rgba(74, 158, 255, 0.03);
+  --grid-size:          40px;
+
+  --font-body:          'Rajdhani', sans-serif;
+  --font-mono:          'Share Tech Mono', monospace;
+
+  --btn-radius:         2px;
+  --card-radius:        2px;
+  --actionbar-radius:   2px;
+  --alert-radius:       2px;
+
+  --evodir-version-tag-bg: #4a9eff;
+
+  /* ------------------------------------------------------------
+     ACTIONBAR & ALERT INTENT PALETTE
+     Drafting markups, redlines, and CAD inspection stamps
+     ------------------------------------------------------------ */
+  --actionbar-bg:       rgba(10, 22, 40, 0.97);
+  --alert-border-color: #1a3a6e;
+
+  --intent-notice:      #38bdf8; /* Dimension Cyan Notice */
+  --intent-notice-bg:   rgba(14, 116, 144, 0.25);
+  
+  --intent-good:        #4ade80; /* Approved CAD Green */
+  --intent-good-bg:     rgba(21, 128, 61, 0.25);
+  
+  --intent-warn:        #fbbf24; /* Revision Mark Amber */
+  --intent-warn-bg:     rgba(180, 83, 9, 0.25);
+  
+  --intent-bad:         #f87171; /* Redline Field Warning */
+  --intent-bad-bg:      rgba(153, 27, 27, 0.25);
+
+  /* ------------------------------------------------------------
+     BLUEPRINT KPI PALETTE (CAD Layers & Trades)
+     Translucent dark base fills with high-visibility line text.
+     ------------------------------------------------------------ */
+  --kpi-1-bg: #1e3a5f; --kpi-1-text: #c8deff; /* Structural Framing (Slate Blueprint) */
+  --kpi-2-bg: #0e7490; --kpi-2-text: #e0f7fa; /* Dimension / Centerline (Cyan) */
+  --kpi-3-bg: #334155; --kpi-3-text: #e2e8f0; /* Reference / Spec Notes (Steel Gray) */
+  --kpi-4-bg: #92400e; --kpi-4-text: #fef3c7; /* Electrical Trace (Copper / Amber) */
+  --kpi-5-bg: #14532d; --kpi-5-text: #dcfce7; /* Plumbing / HVAC (CAD Green) */
+  --kpi-6-bg: #7f1d1d; --kpi-6-text: #fecaca; /* Redline Callout (Markup Red) */
+
+  /* Lightens borders slightly against the deep blue background */
+  --kpi-border-blend: #93c5fd;
+  --kpi-border-mix:   70%;
+}
+
+/* ------------------------------------------------------------
+   UI ELEMENT OVERRIDES
+   ------------------------------------------------------------ */
+.evodir-version-tag {
+  background-color: var(--evodir-version-tag-bg);
+  color: #ffffff;
+}
+
+body {
+  background-image:
+    linear-gradient(var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-line-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-minor) 1px, transparent 1px);
+  background-size:
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    8px 8px, 8px 8px;
+}

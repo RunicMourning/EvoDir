@@ -3,88 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Homelab</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>EvoDir</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="/.includes/themes/blueprint.css">
-</style>
+<link rel="stylesheet" href="/.includes/css/style.css">
+<!-- No href by default — default theme is style.css alone. The
+     theme-selector module sets this href when a theme is actually
+     chosen; evodir.conf's blank theme| means it won't fire on load. -->
+<link id="evodir-theme" rel="stylesheet">
 </head>
 <body>
 
-<div class="sidebar">
-  <div class="sidebar-brand">
-    <div class="label">Homelab</div>
-    <div class="name" id="sidebar-hostname">LOADING</div>
-    <div class="clock" id="sidebar-clock">--:--:--</div>
-  </div>
-  <div id="sidebar-nav">
-    <!-- Populated by JavaScript from nav.json -->
-  </div>
-</div>
+<div class="app-shell" id="appShell">
 
-<script>
-// Load navigation from nav.php
-fetch('/.includes/nav.php')
-  .then(r => r.json())
-  .then(sections => {
-    var html = '';
-    Object.entries(sections).forEach(([sectionName, links]) => {
-      html += '<div class="sidebar-section">';
-      html += '<div class="sidebar-section-label">' + sectionName + '</div>';
-      links.forEach(link => {
-        var target = link.url.startsWith('http') ? ' target="_blank"' : '';
-        html += '<a class="nav-link" href="' + link.url + '"' + target + '>';
-        html += '<i class="bi ' + link.icon + '"></i> ' + link.label;
-        html += '</a>';
-      });
-      html += '</div>';
-      html += '<hr class="sidebar-divider">';
+  <header class="app-header">
+    <div class="app-navbar">
+      <div class="app-navbar-brand">
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="appSidebar">
+          <i class="bi bi-list"></i>
+        </button>
+        <span id="sidebar-name">LOADING</span>
+        <span class="hide-under-tablet app-navbar-subtitle" id="sidebar-label">Homelab</span>
+      </div>
+      <div class="app-navbar-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Choose theme" aria-haspopup="true">
+          <i class="bi bi-palette2"></i>
+        </button>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true" aria-controls="appSidebar">
+          <i class="bi bi-layout-sidebar"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-sidebar" id="appSidebar">
+
+    <div class="sidebar-clock" id="sidebar-clock">--:--:--</div>
+
+    <!-- Zone: sidebar-top - weather module injects here (replaces clock) -->
+    <div id="evodir-zone-sidebar-top"></div>
+
+    <div id="sidebar-nav"></div>
+
+    <!-- Zone: sidebar-bottom - stats/livestats module injects here -->
+    <div id="evodir-zone-sidebar-bottom"></div>
+
+    <div class="sidebar-meta">
+      <h4>Config Metrics</h4>
+      <p>Modules Enabled: <strong id="sidebar-modules-enabled">&mdash;</strong></p>
+      <p>Theme name: <strong class="themename"></strong></p>
+    </div>
+
+  </div>
+
+  <script>
+  fetch('/.includes/api.php?action=config')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+
+      // Identity
+      if (d.siteName) document.getElementById('sidebar-name').textContent  = d.siteName;
+      if (d.label)    document.getElementById('sidebar-label').textContent = d.label;
+      if (d.siteName) document.title = d.siteName;
+
+      // Theme
+      if (d.theme) {
+        document.getElementById('evodir-theme').href = '/.includes/themes/' + d.theme + '.css';
+      }
+
+      // Navigation
+      if (d.nav) {
+        var html     = '';
+        var sections = Object.keys(d.nav);
+        sections.forEach(function(sectionName, idx) {
+          html += '<h2>' + sectionName + '</h2><nav><ul>';
+          d.nav[sectionName].forEach(function(link) {
+            var target = link.url.indexOf('http') === 0 ? ' target="_blank"' : '';
+            html += '<li><a href="' + link.url + '"' + target + '>';
+            html += '<i class="bi ' + link.icon + '"></i> ' + link.label;
+            html += '</a></li>';
+          });
+          html += '</ul></nav>';
+          if (idx < sections.length - 1) html += '<hr>';
+        });
+        document.getElementById('sidebar-nav').innerHTML = html;
+      }
+
+      // Config Metrics — enabled module list
+      if (d.modules) {
+        var enabled = Object.keys(d.modules).filter(function(name) { return d.modules[name]; });
+        document.getElementById('sidebar-modules-enabled').textContent =
+          enabled.length ? enabled.join(', ') : 'None';
+      }
+
+      // Hide clock if weather module is enabled (weather widget replaces it)
+      if (d.modules && d.modules.weather) {
+        var clock = document.getElementById('sidebar-clock');
+        if (clock) clock.style.display = 'none';
+      }
+
+      // Dynamically load enabled module JS files. ?v= is the module's
+      // module.js mtime (from the config response) so a redeployed
+      // module always gets fetched fresh instead of a stale cached
+      // copy silently running against a changed API response shape.
+      if (d.modules) {
+        Object.keys(d.modules).forEach(function(name) {
+          if (d.modules[name]) {
+            var v = (d.moduleVersions && d.moduleVersions[name]) || Date.now();
+            var s = document.createElement('script');
+            s.src = '/.includes/modules/' + name + '/module.js?v=' + v;
+            document.head.appendChild(s);
+          }
+        });
+      }
+
+    })
+    .catch(function() {
+      document.getElementById('sidebar-name').textContent = location.hostname.toUpperCase();
+      document.getElementById('sidebar-nav').innerHTML =
+        '<p class="sidebar-nav-error">Nav unavailable</p>';
     });
-    document.getElementById('sidebar-nav').innerHTML = html;
-  })
-  .catch(err => {
-    document.getElementById('sidebar-nav').innerHTML = '<div style="padding: 1rem; color: #6a90c0; font-size: 12px;">Nav unavailable</div>';
-  });
 
-// Load hostname from stats.php
-fetch('/.includes/stats.php')
-  .then(r => r.json())
-  .then(d => {
-    if (d.hostname) {
-      document.getElementById('sidebar-hostname').textContent = d.hostname.toUpperCase();
+  // Live clock
+  (function() {
+    function tick() {
+      var el = document.getElementById('sidebar-clock');
+      if (!el || el.style.display === 'none') return;
+      var now = new Date();
+      el.textContent =
+        String(now.getHours()).padStart(2,'0') + ':' +
+        String(now.getMinutes()).padStart(2,'0') + ':' +
+        String(now.getSeconds()).padStart(2,'0');
     }
-  })
-  .catch(() => {
-    // Keep default if fetch fails
-  });
+    tick();
+    setInterval(tick, 1000);
+  })();
+  </script>
 
-// Live clock
-(function() {
-  function tick() {
-    var el = document.getElementById('sidebar-clock');
-    if (!el) return;
-    var now = new Date();
-    var h = String(now.getHours()).padStart(2, '0');
-    var m = String(now.getMinutes()).padStart(2, '0');
-    var s = String(now.getSeconds()).padStart(2, '0');
-    el.textContent = h + ':' + m + ':' + s;
-  }
-  tick();
-  setInterval(tick, 1000);
-})();
+  <main class="app-main">
+    <div class="container-1440">
 
-// Inject "Index of" heading if Apache didn't generate one
-document.addEventListener('DOMContentLoaded', function() {
-  if (!document.querySelector('h1')) {
-    var h1 = document.createElement('h1');
-    h1.textContent = 'Index of ' + decodeURIComponent(window.location.pathname);
-    var body = document.body;
-    // Insert before the first non-sidebar element
-    var sidebar = document.querySelector('.sidebar');
-    var ref = sidebar ? sidebar.nextSibling : body.firstChild;
-    body.insertBefore(h1, ref);
-  }
-});
-</script>
+      <!-- Zone: content-top - banner/kpi module injects here (before directory listing) -->
+      <div id="evodir-zone-content-top"></div>

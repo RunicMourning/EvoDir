@@ -1,0 +1,5 @@
+# Hide this directory from the main listing
+# (handled by IndexIgnore .legal in root .htaccess)
+
+# Prevent directory listing of .legal itself
+Options -Indexes

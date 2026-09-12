@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Chameleon CSS — Typography
+   Classless base type — headings, links, lists, tables. Style an element
+   by tag, not by class, and it already looks right.
+   ========================================================================== */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: var(--space-3);
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+p, ul, ol, dl, blockquote, table, pre {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+a:hover, a:focus { text-decoration: underline; outline: none; }
+
+ul, ol { padding-left: var(--space-5); }
+li { margin-bottom: var(--space-2); }
+
+blockquote {
+  margin-left: 0;
+  padding: var(--space-2) var(--space-4);
+  border-left: 4px solid var(--accent-primary);
+  background-color: var(--overlay-subtle);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th { font-weight: 600; color: var(--text-muted); }

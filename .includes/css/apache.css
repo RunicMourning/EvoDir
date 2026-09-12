@@ -1,0 +1,184 @@
+/* ============================================================
+   APACHE FALLBACK — Raw Server Index Style (variables only)
+   Intentionally mimics default Apache directory listing.
+   Used as fallback if JS theme swap fails.
+   ============================================================ */
+:root {
+  --bg-body:          #ffffff;
+  --bg-sidebar:       #ffffff;
+  --border:           #aaaaaa;
+  --border-faint:     #dddddd;
+  --accent:           #0000ee;
+  --text-primary:     #000000;
+  --text-muted:       #444444;
+  --text-faint:       #777777;
+  --text-glow:        #000000;
+  --glow-shadow:      none;
+  --nav-hover-bg:     transparent;
+  --row-hover-bg:     #f9f9f9;
+  --footer-bg:        #f0f0f0;
+  --grid-line-major:  transparent;
+  --grid-line-minor:  transparent;
+  --stat-label:       #555555;
+  --stat-value:       #000000;
+  --stat-accent:      #0000ee;
+  --bar-bg:           #dddddd;
+  --bar-border:       #aaaaaa;
+  --sidebar-w:        220px;
+  --grid-size:        40px;
+
+  /* Apache-authentic typography */
+  --font-body:        "Times New Roman", Times, serif;
+  --font-mono:        "Courier New", Courier, monospace;
+  --font-brand:       "Times New Roman", Times, serif;
+  --brand-name-size:  18px;
+  --brand-name-weight:700;
+  --nav-radius:       0px;
+
+  /* Banner */
+  --banner-bg:         #f9f9f9;
+  --banner-border:     #aaaaaa;
+  --banner-title:      #000000;
+  --banner-text:       #222222;
+  --banner-x:          #555555;
+  --banner-link:       #0000ee;
+  --banner-link-hover: #551a8b;
+
+  /* Version tag */
+  --tag-bg:            #000000;
+  --tag-text:          #ffffff;
+
+  /* KPI colors — muted, authentic */
+  --kpi-color-folders: #555555;
+  --kpi-color-files:   #555555;
+  --kpi-color-movies:  #555555;
+  --kpi-color-shows:   #555555;
+  --kpi-color-songs:   #555555;
+}
+
+/* ---- Apache-authentic overrides ---- */
+
+/* Remove sidebar border — Apache has no sidebar */
+.sidebar {
+  border-right: 1px solid #aaaaaa;
+  background: #ffffff;
+}
+
+/* Nav links look like plain text links */
+.nav-link {
+  color: #0000ee !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+  border: none !important;
+  padding: 2px 4px !important;
+  margin-bottom: 0 !important;
+}
+
+.nav-link:hover {
+  background: transparent !important;
+  color: #551a8b !important;
+  text-decoration: underline !important;
+  border: none !important;
+}
+
+.nav-link i { color: #555555 !important; font-size: 14px !important; }
+
+/* h1 matches Apache exactly */
+h1 {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  border-bottom: 1px solid #aaaaaa !important;
+  text-shadow: none !important;
+}
+
+/* Table matches Apache listing style */
+table {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+}
+
+th {
+  font-family: "Courier New", Courier, monospace !important;
+  font-size: 11px !important;
+  color: #555555 !important;
+  background: #f0f0f0;
+  border-bottom: 1px solid #aaaaaa !important;
+}
+
+td { color: #000000 !important; }
+
+td a             { color: #0000ee !important; }
+td a:visited     { color: #551a8b !important; }
+td a:hover       { color: #551a8b !important; text-decoration: underline; }
+
+/* Sidebar section labels */
+.sidebar-section-label {
+  font-family: "Courier New", Courier, monospace !important;
+  font-size: 10px !important;
+  color: #777777 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Sidebar brand */
+.sidebar-brand {
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.sidebar-brand .label {
+  font-family: "Courier New", Courier, monospace !important;
+  color: #777777 !important;
+}
+
+/* Footer */
+footer {
+  font-family: "Times New Roman", Times, serif !important;
+  color: #555555 !important;
+  border-top: 1px solid #aaaaaa !important;
+  background: #f0f0f0 !important;
+}
+
+footer a { color: #0000ee !important; }
+
+/* Address tag — Apache shows server info here */
+address {
+  font-family: "Times New Roman", Times, serif !important;
+  font-style: italic;
+  color: #555555 !important;
+}
+
+
+/* KPI bar — unstyled, matches Apache aesthetic */
+#evodir-kpi-bar > div {
+  border: 1px solid #aaaaaa !important;
+  border-radius: 0 !important;
+  margin: 0 2px !important;
+  background: #ffffff !important;
+}
+
+/* KPI header — grey instead of colored */
+#evodir-kpi-bar [style*="background:var(--kpi"] {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+  font-family: "Courier New", Courier, monospace !important;
+  font-size: 10px !important;
+}
+
+/* KPI body */
+#evodir-kpi-bar [style*="display:flex;align-items:center;justify-content:space-between"] {
+  background: #ffffff !important;
+}
+
+/* KPI number */
+#evodir-kpi-bar span {
+  color: #000000 !important;
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+/* KPI icon */
+#evodir-kpi-bar i {
+  color: #aaaaaa !important;
+}

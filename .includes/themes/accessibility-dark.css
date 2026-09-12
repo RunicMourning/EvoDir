@@ -1,0 +1,55 @@
+/* ============================================================
+   ACCESSIBILITY — High-Contrast Color Dark Variant
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --theme-id:         "accessibility-color-dark";
+  --theme-family:     "Accessibility";
+  --theme-display-name: "High-Contrast Color Dark";
+
+  --bg-base:          #0b0f19;
+  --bg-surface:       #111827;
+  --shell-sidebar-bg: #030712;
+  --shell-sidebar-text: #f3f4f6;
+  --shell-header-bg:  #030712;
+  --shell-header-text: #f3f4f6;
+  --shell-footer-bg:  #111827;
+  --shell-footer-text: #9ca3af;
+  --shell-main-bg:    #0b0f19;
+  --shell-main-text:  #f3f4f6;
+
+  --border-color:     #374151;
+  --accent-primary:   #38bdf8;
+  --text-primary:     #f3f4f6;
+  --text-muted:       #9ca3af;
+
+  --overlay-hover:    #1f2937;
+  --overlay-active:   #374151;
+  --overlay-faint:    #111827;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+
+  --btn-radius: 6px;
+  --card-radius: 6px;
+  --actionbar-radius: 6px;
+  --alert-radius: 6px;
+
+  --intent-notice-bg: #1e293b;
+
+  /* KPI colors — vibrant, high-luminance colorblind-safe fills */
+  --kpi-1-bg: #0369a1; --kpi-1-text: #ffffff; /* Ocean Blue */
+  --kpi-2-bg: #047857; --kpi-2-text: #ffffff; /* Emerald Teal */
+  --kpi-3-bg: #b45309; --kpi-3-text: #ffffff; /* Amber Gold */
+  --kpi-4-bg: #6d28d9; --kpi-4-text: #ffffff; /* Violet */
+  --kpi-5-bg: #be185d; --kpi-5-text: #ffffff; /* Magenta */
+  --kpi-6-bg: #374151; --kpi-6-text: #ffffff; /* Cool Gray */
+  --kpi-border-blend: white;
+  --kpi-border-mix: 25%;
+}
+
+.evodir-version-tag {
+  background-color: #38bdf8;
+  color: #030712;
+}

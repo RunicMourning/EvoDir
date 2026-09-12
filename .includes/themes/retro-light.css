@@ -1,0 +1,271 @@
+/* ============================================================
+   APACHE — Default Server Directory Listing (Light Variant)
+   ============================================================ */
+:root {
+  --theme-id:           "retro-light";
+  --theme-family:       "Retro";
+  --theme-display-name: "Web 1.0";
+
+  --bg-base:            #ffffff;
+  --bg-surface:         #ffffff;
+  --shell-sidebar-bg:   #ffffff;
+  --shell-sidebar-text: #000000;
+  --shell-header-bg:    #ffffff;
+  --shell-header-text:  #000000;
+  --shell-footer-bg:    #f0f0f0;
+  --shell-footer-text:  #555555;
+  --shell-main-bg:      #ffffff;
+  --shell-main-text:    #000000;
+
+  --border-color:       #aaaaaa;
+  --accent-primary:     #0000ee;
+  --text-primary:       #000000;
+  --text-muted:         #444444;
+
+  --overlay-hover:      transparent;
+  --overlay-active:     #f9f9f9;
+  --overlay-faint:      #f9f9f9;
+
+  /* Apache-authentic typography */
+  --font-body: "Times New Roman", Times, serif;
+  --font-mono: "Courier New", Courier, monospace;
+
+  --btn-radius: 0px;
+  --card-radius: 0px;
+  --actionbar-radius: 0px;
+  --alert-radius: 0px;
+
+  --intent-notice-bg:  #f9f9f9;
+
+  /* KPI colors — muted, authentic */
+  --kpi-1-bg: #555555; --kpi-1-text: #ffffff;
+  --kpi-2-bg: #555555; --kpi-2-text: #ffffff;
+  --kpi-3-bg: #555555; --kpi-3-text: #ffffff;
+  --kpi-4-bg: #555555; --kpi-4-text: #ffffff;
+  --kpi-5-bg: #555555; --kpi-5-text: #ffffff;
+  --kpi-6-bg: #555555; --kpi-6-text: #ffffff;
+  --kpi-border-blend: black;
+  --kpi-border-mix: 80%;
+}
+
+.evodir-version-tag {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* ---- Apache-authentic overrides ---- */
+
+.app-sidebar {
+  border-right: 1px solid #aaaaaa;
+  background: #ffffff;
+}
+
+/* Nav links look like plain text links */
+.app-sidebar a {
+  color: #0000ee !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+  border: none !important;
+  padding: 2px 4px !important;
+  margin-bottom: 0 !important;
+}
+
+.app-sidebar a:hover {
+  background: transparent !important;
+  color: #551a8b !important;
+  text-decoration: underline !important;
+  border: none !important;
+}
+
+.app-sidebar a i { color: #555555 !important; font-size: 14px !important; }
+
+/* h1 matches Apache exactly */
+h1 {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  border-bottom: 1px solid #aaaaaa !important;
+  text-shadow: none !important;
+}
+
+/* Table matches Apache listing style */
+.modern-file-table {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+.modern-file-table th {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: #000000 !important;
+  background: transparent !important;
+  border-bottom: 1px solid #555555 !important;
+  text-align: left !important;
+  padding: 4px 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* Compact layout padding and nuke modern grid lines on files */
+.modern-file-table td {
+  color: #000000 !important;
+  padding: 2px 0 !important;
+  border-bottom: none !important; /* Removes row tracking lines for true index look */
+}
+
+.modern-file-table td a          { color: #0000ee !important; }
+.modern-file-table td a:visited   { color: #551a8b !important; }
+.modern-file-table td a:hover     { color: #551a8b !important; text-decoration: underline; }
+
+.card {
+  border: none;
+  border-bottom: 1px solid #555555 !important;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+
+/* Sidebar section labels */
+.app-sidebar h2 {
+  font-family: "Courier New", Courier, monospace !important;
+  font-size: 10px !important;
+  color: #777777 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Site label next to the site name */
+#sidebar-label {
+  font-family: "Courier New", Courier, monospace !important;
+  color: #777777 !important;
+}
+
+/* Footer */
+.app-footer {
+  font-family: "Times New Roman", Times, serif !important;
+  color: #555555 !important;
+  border-top: 1px solid #aaaaaa !important;
+  background: #f0f0f0 !important;
+}
+
+.app-footer a { color: #0000ee !important; }
+.footer-info-text {
+  font-family: "Times New Roman", Times, serif !important;
+  font-style: italic;
+  color: #555555 !important;
+}
+
+/* ============================================================
+   KPI MODULE OVERRIDES — Flattened into raw text breaks
+   ============================================================ */
+
+.actionbar {
+  background: transparent !important;
+  border-top: 1px solid #555555 !important;
+  border-bottom: 1px solid #555555 !important;
+  padding: 8px 0 !important;
+  margin-bottom: 1.5rem !important;
+  box-shadow: none !important;
+}
+
+.kpi {
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  margin: 0 4px !important;
+}
+
+.kpi-header {
+  background: transparent !important;
+  color: #000000 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 13px !important;
+  font-weight: bold !important;
+  letter-spacing: normal !important;
+  text-transform: uppercase;
+  padding: 0 0 2px 0 !important;
+  opacity: 1;
+}
+
+/* Hide modern web UI decorative graphics */
+.kpi-header i {
+  display: none !important;
+}
+
+.kpi-body {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.kpi-body h3 {
+  font-size: 24px !important;
+  font-weight: normal !important;
+  color: #000000 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  letter-spacing: normal !important;
+}
+
+/* ============================================================
+   WEATHER MODULE OVERRIDES — Brutalist Text Readout
+   ============================================================ */
+
+.weather-widget {
+  border-bottom: 1px solid #aaaaaa !important;
+  padding-bottom: 10px !important;
+}
+
+.weather-widget,
+.weather-message,
+.weather-condition,
+.weather-stat-label,
+.weather-stat-value,
+.weather-detail-label span,
+.weather-detail-value,
+.weather-updated,
+.weather-stale {
+  font-family: "Times New Roman", Times, serif !important;
+  text-shadow: none !important;
+}
+
+/* Strip accent graphics and custom canvas layout elements */
+.weather-icon,
+.weather-detail-icon,
+.weather-divider {
+  display: none !important;
+}
+
+.weather-stats {
+  border-top: 1px dashed #aaaaaa !important; /* Authentic text division separator */
+  padding-top: 6px !important;
+  margin-top: 6px !important;
+}
+
+.weather-temp {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+  color: #000000 !important;
+}
+
+.weather-stat-value {
+  color: #000000 !important;
+}
+
+/* ---- Fix Column Alignment & Web 1.0 Layout ---- */
+
+.modern-file-table .col-size {
+  padding-right: 30px !important;
+  text-align: right !important;
+}
+
+.modern-file-table .col-desc {
+  text-align: left !important;
+  padding-left: 10px !important;
+  white-space: nowrap;
+}

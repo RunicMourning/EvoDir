@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Chameleon CSS
+   Tokens & Imports — every custom property in the framework traces back
+   to this file. Themes work by overriding these in a bare :root block;
+   nothing else in the framework ever references a color, spacing, or
+   radius value directly.
+   ========================================================================== */
+
+/* 1. Imports */
+@import url('layout.css');
+@import url('typography.css');
+@import url('components.css');
+@import url('app-header.css');
+@import url('app-sidebar.css');
+@import url('app-main.css');
+@import url('actionbar.css');
+@import url('file-table.css');
+@import url('app-footer.css');
+@import url('login.css');
+@import url('theme-modal.css');
+
+/* 2. Structural tokens (sizing, spacing, timing — moved here from layout.css
+   so every variable in the framework lives in exactly one file) */
+:root {
+  --gutter: 1rem;
+  --container-padding: 1rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --header-height: 60px;
+  /* Used by .app-sidebar's bottom padding (app-sidebar.css) to keep real
+     content clear of the zone .app-footer's z-index wins if the two
+     overlap — see the comment there. Previously also fed a height calc
+     that shortened the sidebar itself; that approach was reverted, this
+     token stayed for the padding use. */
+  --footer-height: 56px;
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 0px;
+  --transition-speed: 200ms ease;
+  /* Stacking order, low to high. --z-footer is a local concern — inside
+     .app-shell it only ever needs to beat .app-sidebar (position:sticky,
+     z-index:auto, so effectively stack level 0), not compete with the
+     global overlay chrome below, so it stays its own small number rather
+     than sharing that scale. --z-backdrop and --z-overlay are scoped
+     to the mobile off-canvas menu specifically — neither ever spatially
+     overlaps the header (the panel starts at top: var(--header-height)),
+     so their position relative to --z-header doesn't matter visually.
+     --z-modal is different on purpose: a true full-page dialog (the
+     theme picker, or anything like it) has to sit above absolutely
+     everything, header included — that's what makes it a modal. */
+  --z-footer: 1;
+  --z-backdrop: 999;
+  --z-overlay: 1000;
+  --z-header: 1001;
+  --z-modal: 1002;
+}
+
+/* 3. Fallback Variables (Pure unstyled browser defaults)
+   No elevated "card surface" concept without styling, so --bg-surface
+   matches --bg-base; no dimmed footer without styling, so every shell
+   zone shares the same plain text color. KPI cards get a flat neutral
+   gray rather than the themed rainbow palette — distinguishable as
+   cards without implying any color-coded meaning that isn't there. */
+:root {
+  --theme-id: "none";
+  --theme-family: "none";
+  --theme-display-name: "No theme";
+
+  --bg-base: #ffffff;
+  --bg-surface: #ffffff;
+  --text-primary: #000000;
+  --text-muted: #666666;
+  --accent-primary: #0000ee;
+
+  --shell-header-bg: #ffffff;
+  --shell-header-text: #000000;
+  --shell-sidebar-bg: #ffffff;
+  --shell-sidebar-text: #000000;
+  --shell-main-bg: #ffffff;
+  --shell-main-text: #000000;
+  --shell-footer-bg: #ffffff;
+  --shell-footer-text: #000000;
+
+  /* Generic border + surface-overlay tokens, shared across components.
+     Introduced so every rounded corner / background-tint in the framework
+     traces back to a variable defined here, per the theme-forward contract. */
+  --border-color: #cccccc;
+  --overlay-hover: rgba(0, 0, 0, 0.05);
+  --overlay-active: rgba(0, 0, 0, 0.1);
+  --overlay-faint: rgba(0, 0, 0, 0.03);
+  --overlay-subtle: rgba(0, 0, 0, 0.02);
+
+  /* Mobile off-canvas backdrop */
+  --nav-backdrop-bg: rgba(0, 0, 0, 0.5);
+
+  --actionbar-border-color: #cccccc;
+  --actionbar-bg: #ffffff;
+  --actionbar-radius: 0px;
+
+  --alert-border-color: #cccccc;
+  --alert-radius: 0px;
+
+  --intent-notice: #0000ee;
+  --intent-notice-bg: #e6e6ff;
+  --intent-good: #008000;
+  --intent-good-bg: #e6ffe6;
+  --intent-warn: #808000;
+  --intent-warn-bg: #ffffe6;
+  --intent-bad: #ff0000;
+  --intent-bad-bg: #ffe6e6;
+
+  --btn-bg: #efefef;
+  --btn-bg-hover: #e5e5e5;
+  --btn-text: #000000;
+  --btn-border: #767676;
+  --btn-radius: 2px;
+  --btn-padding-y: 0.25rem;
+  --btn-padding-x: 0.5rem;
+
+  --card-radius: 0px;
+
+  /* KPI border still needs somewhere to land even with no palette active
+     (--kpi-border-mix/blend feed the color-mix() in components.css) */
+  --kpi-border-blend: black;
+  --kpi-border-mix: 85%;
+
+  --input-group-bg: #ffffff;
+  --input-group-border: #767676;
+  --input-group-radius: 0px;
+
+  /* KPI card palette — flat, unstyled-HTML look with no theme loaded */
+  --kpi-1-bg: #e7e7e7; --kpi-1-text: #000000;
+  --kpi-2-bg: #e7e7e7; --kpi-2-text: #000000;
+  --kpi-3-bg: #e7e7e7; --kpi-3-text: #000000;
+  --kpi-4-bg: #e7e7e7; --kpi-4-text: #000000;
+  --kpi-5-bg: #e7e7e7; --kpi-5-text: #000000;
+  --kpi-6-bg: #e7e7e7; --kpi-6-text: #000000;
+
+  /* Used for tabular/numeric readouts (system stats, weather figures).
+     'Share Tech Mono' is a nod to the original retro-tech aesthetic —
+     falls back to system monospace if it isn't loaded via a <link>. */
+  --font-mono: ui-monospace, 'Share Tech Mono', 'SF Mono', Consolas, monospace;
+  --font-body: system-ui, -apple-system, sans-serif;
+
+  /* Decorative "graph paper" background grid — a couple of themes want
+     this, invisible unless a theme sets these to real colors. See the
+     .app-main background-image rules in layout.css. */
+  --grid-line-major: transparent;
+  --grid-line-minor: transparent;
+  --grid-size: 40px;
+
+  /* Used by .branding (components.css) — a general "swap text for a
+     logo image" utility, not tied to any one place it's used.
+     Placeholder below is a self-contained inline SVG, not a real logo —
+     swap it for a project's actual mark. */
+  --brand-logo-url: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="32" viewBox="0 0 140 32"%3E%3Crect width="140" height="32" rx="4" fill="%23d0d0d0"/%3E%3Ctext x="70" y="21" font-family="sans-serif" font-size="12" fill="%23666666" text-anchor="middle"%3ELOGO%3C/text%3E%3C/svg%3E');
+  --brand-logo-width: 140px;
+  --brand-logo-height: 32px;
+}
+
+
+.app-main {
+  background-color: var(--shell-main-bg);
+  color: var(--shell-main-text);
+  padding-top: 10px;
+}
+
+.app-footer {
+  background-color: var(--shell-footer-bg);
+  color: var(--shell-footer-text);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-3) 0;
+  font-size: 0.875rem;
+}
+
+.app-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.app-footer-links {
+  display: flex;
+  gap: var(--space-4);
+}

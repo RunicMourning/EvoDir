@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Chameleon CSS — Actionbar
+   KPI cards, notices, and alerts — everything that renders inside
+   .actionbar.
+   ========================================================================== */
+
+/* ==========================================================================
+   KPI Card
+   Structure: .kpi > .kpi-header (optional) + .kpi-body (required) + .kpi-footer (optional)
+   Each .kpi gets a background/text pair from a 6-color palette based on its
+   position among its siblings, cycling every 6 via :nth-child(6n+N). The
+   border is never hand-picked — it's derived from that card's own --kpi-bg
+   with color-mix(), darkened in the light theme and lightened in the dark
+   theme via the --kpi-border-blend token (vanilla CSS's answer to Sass's
+   darken()/lighten(), no build step required).
+   ========================================================================== */
+.kpi {
+  background-color: var(--kpi-bg, var(--bg-surface));
+  color: var(--kpi-text, var(--text-primary));
+  border: 1px solid color-mix(in srgb, var(--kpi-bg, var(--bg-surface)) var(--kpi-border-mix, 85%), var(--kpi-border-blend, black));
+  border-radius: var(--card-radius);
+  padding: var(--space-3);
+}
+
+.kpi-header {
+  font-size: 0.875rem;
+  margin-bottom: var(--space-1);
+  opacity: 0.75;
+}
+
+.kpi-body { flex: 1 1 auto; }
+.kpi-body h1, .kpi-body h2, .kpi-body h3,
+.kpi-body h4, .kpi-body h5, .kpi-body h6 {
+  margin: 0;
+  color: inherit;
+}
+
+.kpi-footer {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  font-size: 0.75rem;
+  opacity: 0.75;
+  border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+/* Positional palette — reassigns which --kpi-bg/--kpi-text pair is active.
+   Written as explicit :nth-child lists rather than :nth-child(6n+1) etc.
+   An An+B formula that resolves to position 1 (like 6n+1) has a confirmed,
+   reproducible bug in current Chromium: it silently fails to apply when
+   the rule comes from an external stylesheet (works inline, works as a
+   literal :nth-child(1), works for 6n+2/6n+3 — only the "+1" formula
+   breaks, and only when file-loaded). Listing positions explicitly avoids
+   it. Covers 3 cycles (18 cards); extend the lists if you need more. */
+.kpi:nth-child(1), .kpi:nth-child(7), .kpi:nth-child(13)  { --kpi-bg: var(--kpi-1-bg); --kpi-text: var(--kpi-1-text); }
+.kpi:nth-child(2), .kpi:nth-child(8), .kpi:nth-child(14)  { --kpi-bg: var(--kpi-2-bg); --kpi-text: var(--kpi-2-text); }
+.kpi:nth-child(3), .kpi:nth-child(9), .kpi:nth-child(15)  { --kpi-bg: var(--kpi-3-bg); --kpi-text: var(--kpi-3-text); }
+.kpi:nth-child(4), .kpi:nth-child(10), .kpi:nth-child(16) { --kpi-bg: var(--kpi-4-bg); --kpi-text: var(--kpi-4-text); }
+.kpi:nth-child(5), .kpi:nth-child(11), .kpi:nth-child(17) { --kpi-bg: var(--kpi-5-bg); --kpi-text: var(--kpi-5-text); }
+.kpi:nth-child(6), .kpi:nth-child(12), .kpi:nth-child(18) { --kpi-bg: var(--kpi-6-bg); --kpi-text: var(--kpi-6-text); }
+
+.actionbar > [class^="alert-"],
+.actionbar > .notice {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--alert-radius);
+  border: 1px solid var(--alert-border-color);
+  background-color: var(--actionbar-bg);
+}
+
+.actionbar > [class^="alert-"] > i,
+.actionbar > .notice > i {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.actionbar > .notice { border-left: 4px solid var(--intent-notice); background-color: var(--intent-notice-bg); }
+.actionbar > .alert-good { border-left: 4px solid var(--intent-good); background-color: var(--intent-good-bg); }
+.actionbar > .alert-warn { border-left: 4px solid var(--intent-warn); background-color: var(--intent-warn-bg); }
+.actionbar > .alert-bad { border-left: 4px solid var(--intent-bad); background-color: var(--intent-bad-bg); }
+
+/* The content div between the icon and an optional dismiss button */
+.actionbar > [class^="alert-"] > div,
+.actionbar > .notice > div {
+  flex: 1;
+}
+
+.actionbar > .notice strong,
+.actionbar > [class^="alert-"] strong {
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.actionbar > .notice p,
+.actionbar > [class^="alert-"] p {
+  margin: var(--space-2) 0 0;
+}
+
+.actionbar > .notice p:first-child,
+.actionbar > [class^="alert-"] p:first-child {
+  margin-top: 0;
+}
+
+.notice-dismiss {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: var(--space-1);
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notice-dismiss:hover {
+  color: var(--text-primary);
+}

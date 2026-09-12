@@ -1,0 +1,71 @@
+/* ============================================================
+   ACCESSIBILITY — High-Contrast Color Light Variant (Fixed Sidebar)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --theme-id:         "accessibility-color-light";
+  --theme-family:     "Accessibility";
+  --theme-display-name: "High-Contrast Color Light";
+
+  --bg-base:          #f8f9fa;
+  --bg-surface:       #ffffff;
+  --shell-sidebar-bg: #0b192c;
+  --shell-sidebar-text: #ffffff;
+  --shell-header-bg:  #0b192c;
+  --shell-header-text: #ffffff;
+  --shell-footer-bg:  #e9ecef;
+  --shell-footer-text: #0b192c;
+  --shell-main-bg:    #f8f9fa;
+  --shell-main-text:  #111827;
+
+  --border-color:     #cbd5e1;
+  --accent-primary:   #2563eb;
+  --text-primary:     #111827;
+  --text-muted:       #4b5563;
+
+  --overlay-hover:    #eff6ff;
+  --overlay-active:   #dbeafe;
+  --overlay-faint:    #f1f5f9;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+
+  --btn-radius: 6px;
+  --card-radius: 6px;
+  --actionbar-radius: 6px;
+  --alert-radius: 6px;
+
+  --intent-notice-bg: #eff6ff;
+
+  /* KPI colors — distinct, colorblind-safe categorical fills */
+  --kpi-1-bg: #1d4ed8; --kpi-1-text: #ffffff; /* Deep Royal Blue */
+  --kpi-2-bg: #047857; --kpi-2-text: #ffffff; /* High-Contrast Teal (Safe for red/green) */
+  --kpi-3-bg: #b45309; --kpi-3-text: #ffffff; /* Rich Amber */
+  --kpi-4-bg: #7e22ce; --kpi-4-text: #ffffff; /* Vivid Purple */
+  --kpi-5-bg: #be185d; --kpi-5-text: #ffffff; /* Deep Rose */
+  --kpi-6-bg: #0f172a; --kpi-6-text: #ffffff; /* Slate Dark */
+  --kpi-border-blend: black;
+  --kpi-border-mix: 20%;
+}
+
+.evodir-version-tag {
+  background-color: #1d4ed8;
+  color: #ffffff;
+}
+
+/* Force light text tokens specifically inside the dark sidebar */
+.app-sidebar {
+  background-color: #0b192c;
+  --text-primary: #ffffff;
+  --text-muted: #cbd5e1;
+  --accent-primary: #38bdf8;
+}
+
+.app-sidebar a {
+  color: #ffffff !important;
+}
+
+.app-sidebar a:hover {
+  color: #38bdf8 !important;
+}

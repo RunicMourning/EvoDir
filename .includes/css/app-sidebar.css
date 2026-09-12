@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Chameleon CSS — App Sidebar
+   The sidebar's specific look — nav links, stat rows, weather widget.
+   ========================================================================== */
+.app-sidebar {
+  background-color: var(--shell-sidebar-bg);
+  color: var(--shell-sidebar-text);
+  border-right: 1px solid var(--border-color);
+  /* Bottom padding gets extra clearance equal to --footer-height so real
+     content (last nav link, last stat row, whatever) never scrolls into
+     the zone .app-footer's z-index already wins if the sidebar's full-height
+     box and the footer overlap — the padding keeps that overlap landing on
+     empty space instead of on text. This is really a sidebar/footer
+     spatial relationship (a layout.css concern per the file-ownership rule),
+     but it has to live here instead: this shorthand `padding` loads after
+     layout.css in style.css's @import order, so a `padding-bottom` set in
+     layout.css would just get overwritten by it. One rule, one place,
+     rather than fighting cascade order to keep the split pure. */
+  padding: var(--space-3) var(--space-3) calc(var(--space-3) + var(--footer-height)) var(--space-3);
+}
+
+/* Typography Overrides */
+.app-sidebar h1, .app-sidebar h2, .app-sidebar h3, 
+.app-sidebar h4, .app-sidebar h5, .app-sidebar h6 {
+  font-size: 0.875rem;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-2);
+  line-height: 1.2;
+}
+
+.app-sidebar h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.app-sidebar h3 { color: var(--text-primary); font-weight: 700; }
+.app-sidebar h4 {
+  color: var(--accent-primary);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-1);
+}
+
+/* Nav Structure */
+.app-sidebar nav ul,
+.app-sidebar > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.app-sidebar li { margin-bottom: var(--space-2); }
+
+.app-sidebar a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: inherit;
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--btn-radius);
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.app-sidebar a:hover, .app-sidebar a:focus {
+  background-color: var(--overlay-hover);
+  color: var(--accent-primary);
+  outline: none;
+}
+
+.app-sidebar a[aria-current="page"] {
+  background-color: var(--overlay-active);
+  color: var(--text-primary);
+  font-weight: bold;
+  border-left: 3px solid var(--accent-primary);
+}
+
+.app-sidebar hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: var(--space-3) 0;
+}
+
+/* .input-group's own defaults (components.css) assume a page-level
+   background — --input-group-bg falls back to a flat white, which reads
+   fine on a card or a form page but sits as a stark box against the
+   sidebar's own surface. Blend it into the sidebar instead, using the
+   same overlay/border tokens nav links already use here. */
+.app-sidebar .input-group {
+  background-color: var(--overlay-faint);
+  border-color: var(--border-color);
+}
+
+.app-sidebar .input-group:focus-within {
+  border-color: var(--accent-primary);
+}
+
+.app-sidebar .input-group-text {
+  background-color: transparent;
+}
+
+.sidebar-clock {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  padding: 0 var(--space-1) var(--space-2);
+}
+
+.sidebar-meta {
+  margin-top: var(--space-4);
+}
+
+.sidebar-meta p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.sidebar-nav-error {
+  padding: var(--space-3);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   Stat Rows + Bars
+   Shared by the stats/ and livestats/ modules (mutually exclusive
+   alternates — only one is ever enabled at a time).
+   ========================================================================== */
+.stat-list {
+  padding: 0 var(--space-1);
+}
+
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.2rem var(--space-1);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+
+.stat-label {
+  color: var(--text-muted);
+}
+
+.stat-label i {
+  margin-right: var(--space-1);
+  font-size: 0.6875rem;
+}
+
+.stat-value {
+  color: var(--text-primary);
+}
+
+.stat-bar {
+  margin: 2px var(--space-1) var(--space-2);
+  background-color: var(--overlay-faint);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  height: 3px;
+  overflow: hidden;
+}
+
+.stat-bar-fill {
+  width: var(--pct, 0%);
+  height: 100%;
+  background-color: var(--intent-good);
+  border-radius: 2px;
+}
+
+.stat-bar[data-level="warn"] .stat-bar-fill { background-color: var(--intent-warn); }
+.stat-bar[data-level="bad"]  .stat-bar-fill { background-color: var(--intent-bad); }
+.stat-bar[data-level="critical"] .stat-bar-fill {
+  background-color: var(--intent-bad);
+  animation: critical-pulse 1s infinite;
+}
+
+@keyframes critical-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+.stat-pct-row {
+  padding: 0 var(--space-1) var(--space-2);
+  text-align: right;
+  font-size: 0.625rem;
+  font-family: var(--font-mono);
+}
+
+.stat-empty {
+  display: block;
+  padding: var(--space-1);
+  font-size: 0.6875rem;
+}
+
+/* ==========================================================================
+   Weather Widget
+   ========================================================================== */
+.weather-widget {
+  padding: var(--space-2) var(--space-3) var(--space-2);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weather-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.weather-location i {
+  color: var(--accent-primary);
+  font-size: 0.75rem;
+}
+
+.weather-message {
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  font-family: var(--font-mono);
+  padding: var(--space-1) 0;
+}
+
+.weather-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-2);
+}
+
+.weather-temp {
+  font-size: 1.625rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.weather-condition {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.03em;
+}
+
+.weather-icon {
+  font-size: 2rem;
+  color: var(--accent-primary);
+  margin-top: 2px;
+}
+
+.weather-stats {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.weather-stat {
+  text-align: center;
+  flex: 1;
+}
+
+.weather-stat-label {
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.weather-stat-value {
+  font-size: 0.8125rem;
+  color: var(--accent-primary);
+  margin-top: 1px;
+}
+
+.weather-divider {
+  width: 1px;
+  background-color: var(--border-color);
+}
+
+.weather-details > * + * {
+  margin-top: var(--space-1);
+}
+
+.weather-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-detail-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.weather-detail-icon {
+  font-size: 0.6875rem;
+  color: var(--accent-primary);
+}
+
+.weather-detail-label span {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.weather-detail-value {
+  font-size: 0.625rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.weather-updated-row {
+  text-align: right;
+  margin-top: var(--space-1);
+}
+
+.weather-updated {
+  font-size: 0.5625rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.weather-stale {
+  color: var(--text-muted);
+  font-size: 0.5625rem;
+  text-align: right;
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+}

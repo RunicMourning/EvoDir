@@ -1,0 +1,148 @@
+/* ============================================================
+   TERMINAL — Green Phosphor (variables only)
+   Theme ID: retro-dark
+   Family: Retro
+   ============================================================ */
+:root {
+  --theme-id:           "retro-dark";
+  --theme-family:       "Retro";
+  --theme-display-name: "Dummy Terminal";
+
+  /* ------------------------------------------------------------
+     SURFACE & LAYOUT — Pure Monochrome Phosphor Black
+     ------------------------------------------------------------ */
+  --bg-base:            #000000;
+  --bg-surface:         #000000;
+  --shell-sidebar-bg:   #020a02;
+  --shell-sidebar-text: #33ff33;
+  --shell-header-bg:    #020a02;
+  --shell-header-text:  #33ff33;
+  --shell-footer-bg:    rgba(0, 0, 0, 0.98);
+  --shell-footer-text:  #1a8c1a;
+  --shell-main-bg:      #000000;
+  --shell-main-text:    #33ff33;
+
+  /* ------------------------------------------------------------
+     LINE WORK, INK & TYPOGRAPHY
+     ------------------------------------------------------------ */
+  --border-color:       #0d4d0d;
+  --accent-primary:     #33ff33;
+  --text-primary:       #33ff33;
+  --text-muted:         #1a8c1a;
+
+  --overlay-hover:      rgba(51, 255, 51, 0.08);
+  --overlay-active:     rgba(51, 255, 51, 0.15);
+  --overlay-faint:      rgba(51, 255, 51, 0.03);
+
+  --font-body:          'Share Tech Mono', monospace;
+  --font-mono:          'Share Tech Mono', monospace;
+
+  /* Strict zero-radius for terminal character cells */
+  --btn-radius:         0px;
+  --card-radius:        0px;
+  --actionbar-radius:   0px;
+  --alert-radius:       0px;
+
+  --evodir-version-tag-bg: #33ff33;
+
+  /* ------------------------------------------------------------
+     ACTIONBAR & ALERT INTENT PALETTE
+     Monochrome Phosphor Alerts (Wireframe & Inverse Text)
+     ------------------------------------------------------------ */
+  --actionbar-bg:       #000000;
+  --alert-border-color: #33ff33;
+
+  --intent-notice:      #33ff33;
+  --intent-notice-bg:   rgba(51, 255, 51, 0.05);
+  
+  --intent-good:        #33ff33;
+  --intent-good-bg:     rgba(51, 255, 51, 0.05);
+  
+  --intent-warn:        #33ff33;
+  --intent-warn-bg:     rgba(51, 255, 51, 0.10);
+  
+  --intent-bad:         #33ff33;
+  --intent-bad-bg:      rgba(51, 255, 51, 0.15);
+
+  /* ------------------------------------------------------------
+     MONOCHROME CRT KPI PALETTE
+     Transparent wireframe card bases with glowing green text.
+     ------------------------------------------------------------ */
+  --kpi-1-bg: #000000; --kpi-1-text: #33ff33;
+  --kpi-2-bg: #000000; --kpi-2-text: #33ff33;
+  --kpi-3-bg: #000000; --kpi-3-text: #33ff33;
+  --kpi-4-bg: #000000; --kpi-4-text: #33ff33;
+  --kpi-5-bg: #000000; --kpi-5-text: #33ff33;
+  --kpi-6-bg: #000000; --kpi-6-text: #33ff33;
+
+  /* Dynamic border mixes to sharp #0d4d0d / #33ff33 wireframe outline */
+  --kpi-border-blend: #33ff33;
+  --kpi-border-mix:   0%;
+}
+
+/* ============================================================
+   TERMINAL UI OVERRIDES
+   ============================================================ */
+.evodir-version-tag {
+  background-color: #33ff33;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Global Screen Scanline Effect */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Dedicated Sidebar Scanlines */
+.app-sidebar {
+  background-color: var(--shell-sidebar-bg);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(51, 255, 51, 0.03) 0px,
+    rgba(51, 255, 51, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Terminal-prompt prefix on the site name */
+#sidebar-name::before {
+  content: '> _';
+  margin-right: 0.4em;
+  font-size: 0.85em;
+}
+
+/* Authentically Styled Wireframe KPI Cards */
+.kpi {
+  background-color: #000000 !important;
+  border: 1px solid #33ff33 !important;
+}
+
+/* Reverse-Video Header Bar (VT100 Highlighting) */
+.kpi-header {
+  background-color: #33ff33 !important;
+  color: #000000 !important;
+  padding: 2px 6px;
+  font-weight: bold;
+  opacity: 1 !important;
+  margin-bottom: var(--space-2);
+}
+
+/* Glow Effects */
+.modern-file-table tbody tr:hover td { text-shadow: 0 0 6px rgba(51, 255, 51, 0.4); }
+a:hover { text-shadow: 0 0 8px rgba(51, 255, 51, 0.6); }
+.app-sidebar a:hover { text-shadow: 0 0 8px rgba(51, 255, 51, 0.5); }
+h1 { text-shadow: 0 0 10px rgba(51, 255, 51, 0.5); }

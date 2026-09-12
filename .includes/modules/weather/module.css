@@ -1,0 +1,129 @@
+/* ============================================================
+   EvoDir — Weather Module Structural Layout
+   Same variable tokens the rest of the system uses (--text-*,
+   --accent, --border, --font-mono), so a theme's own .sidebar
+   scope (see exploration-light.css) overrides this automatically.
+   No theme-specific rules belong in this file.
+   ============================================================ */
+
+.evodir-weather {
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--border, #1a3a6e);
+}
+
+.evodir-weather-message {
+  color: var(--text-faint);
+  font-size: 11px;
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+  padding: 4px 0;
+}
+
+.evodir-weather-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.evodir-weather-temp {
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.evodir-weather-condition {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  letter-spacing: 0.03em;
+}
+
+.evodir-weather-icon {
+  font-size: 32px;
+  color: var(--accent, #4a9eff);
+  margin-top: 2px;
+}
+
+.evodir-weather-stats {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border, #1a3a6e);
+  padding-top: 6px;
+  margin-bottom: 6px;
+}
+
+.evodir-weather-stat {
+  text-align: center;
+  flex: 1;
+}
+
+.evodir-weather-stat-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.evodir-weather-stat-value {
+  font-size: 13px;
+  color: var(--text-glow, #7ec8ff);
+  margin-top: 1px;
+}
+
+.evodir-weather-divider {
+  width: 1px;
+  background: var(--border, #1a3a6e);
+}
+
+.evodir-weather-details > * + * {
+  margin-top: 3px;
+}
+
+.evodir-weather-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.evodir-weather-detail-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.evodir-weather-detail-icon {
+  font-size: 11px;
+  color: var(--accent, #4a9eff);
+}
+
+.evodir-weather-detail-name {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+}
+
+.evodir-weather-detail-value {
+  font-size: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+}
+
+.evodir-weather-updated-row {
+  text-align: right;
+  margin-top: 5px;
+}
+
+.evodir-weather-updated {
+  font-size: 9px;
+  color: var(--text-faint);
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+}
+
+.evodir-weather-stale {
+  color: var(--text-faint);
+  font-size: 9px;
+  text-align: right;
+  margin-top: 4px;
+  font-family: var(--font-mono, 'Share Tech Mono', monospace);
+}
